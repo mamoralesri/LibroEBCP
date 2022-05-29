@@ -1,0 +1,6 @@
+package: placeholder
+type: Book
+title: Python para estadística
+version: 0.0.1
+Imports: bookdown, ggplot2
+Remotes: rstudio/bookdown

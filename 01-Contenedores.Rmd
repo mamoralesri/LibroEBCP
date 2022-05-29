@@ -1,0 +1,1242 @@
+# Contenedores de datos en Python
+
+Python ofrece varias estructuras para el almacenamiento de datos, entre ellas tenemos 
+
+* Tuplas *(tuple)*
+* Listas *(list)*
+* Arreglos *(array)*
+* Diccionarios *(dictionaries)* 
+* Series *(Series)*   
+* Marcos de datos *(DataFrames)*
+
+Los arreglos que estudiaremos serán los definidos en el paquete **NumPy** [@harris2020array], las *Series* y *data frames* no son del paquete estándar Python, en este curso usaremos las definidas en el paquete *Pandas* [@mckinney2010data].          
+
+## Tuplas {#sec:tuplas} 
+
+Las tuplas se usan   para agrupar objetos que pueden ser del mismo o de diferente tipo, son objetos indexados, iterables e    **inmutables**, esta última propiedad implica que, una vez creadas, a las tuplas no se les puede modificar (agregar, quitar o  cambiar entradas) . 
+
+### Creación. 
+
+En esta sección  estudiaremos como crear tuplas, acceder e iterar sobre sus  elementos. En el siguiente bloque se crean e  imprimen las tuplas `t1` y `t2` 
+
+```{python creartupla12}
+t1=('abc',4,True,5,False,2.5,4,True,"abc",4,True,"abc");t1
+t2=(1,0.7,t1,"Hola",4)
+```
+
+```{python, include=FALSE}
+nt1=len(t1)-1
+```
+Observe que la  tupla   `t1`  contiene elementos de tipo  cadena de caracteres (str), números  enteros (int), valores lógicos (bool) y valores reales o de punto flotante  (floats). Incluso dentro de una tupla se pueden tener otras tuplas como ocurre con la tupla `t2` que tiene *anidada* a la tupla `t1`.   
+Para acceder a los elementos de una tupla se usa `tupla[i]` donde `i` es un número entero entre cero (0) y la longitud de la tupla menos uno $(n-1)$. Por ejemplo, para recuperar elementos de la tupla `t1` usamos `t1[i]`  con `i` entre cero y `r py$nt1`  
+
+```{python tuplaacceso12}
+t1[0] # primer elemento de la tupla t1 
+t1[2] # tercer elemento de la tupla t1 
+```
+
+Esta característica común en  todas las estructuras de datos indexadas con índice numérico  en Python: el elemento $k$  tiene índice $k-1$, olvidar este hecho podria conducir a errores fatales. 
+
+Los usuarios de lenguajes como `R` o `MATLAB`   podrían verse tentados a realizar la siguiente asignación 
+
+```{python eval=FALSE }
+t1[2]=0
+```
+buscando asignar el valor 0 al tercer elemento de la tupla, operacion que resultaría en el mensaje `TypeError:  'tuple' object does not support item assignment`, a esta característica es que nos referimos con que las tuplas son **inmutables**, una vez creadas no es posible cambiar, eliminar, agregar elementos. Esta característica tiene por lo menos tres ventajas: proteje contra cambios accidentales en el contenido de la tupla,  se gana eficiencia en cuanto al uso de memoria de la máquina y mayor rapidez de acceso a sus elementos. 
+
+Otra forma de crear tuplas es mediante la siguiente sintaxis, con la segunda linea se imprime el tipo de objeto que es `t3`, con el fin de verificar que efectivamente se ha creado una tupla. 
+
+```{python }
+t3=10,20 
+type(t3)  
+```
+Esta forma de crear tuplas se conoce como *empaquetado*,  también podemos recuperar los elementos de una tupla mediante el *desempaquetado*, de la siguiente manera 
+```{python eval=FALSE}
+x,y=t3
+print("x= ",x)
+print("y= ",y)
+```
+el primer elemento de la tupla `t3` se asigna al objeto `x` y el segundo a `y` luego se imprimen sus valores.  Se pueden crear tuplas vacías y tuplas que contiene un solo valor, llamadas tuplas unitarias como se muestra a continuación  
+```{python}
+tupvacia=() # crea una tupla vacía 
+tupunit=(4,) # crea una tupla con un único elemento 
+print(tupvacia,type(tupvacia),tupunit,type(tupunit))
+```
+note el uso de la coma después del elemento de la tupla unitaria, eso debe ser así porque de lo contrario no se estaría creando una tupla, sino un objeto de tipo entero (`int`)    
+```{python}
+x=(4) # cuidado!!! x es un entero, no una tupla  
+print(tupunit,type(tupunit))
+```
+
+###  Indexado de tuplas.  
+
+Se puede crear una tupla a partir de otra mediante órdenes de la forma  `tupla[i:j]` esto se conoce  como indexación, veamos algunos ejemplos: 
+```{python}
+a=(3,2,4,1,6,4) # se crea la tupla a 
+b=a[1:4] # tupla b, creada a partir de a 
+print(b,type(b))
+```
+Note en la salida anterior que la tupla `b` inicia en `2`,  y no en `3`, que es el primer elemento de la tupla `a` ¿por qué?  
+```{python eval=FALSE}
+a[:4]    # los cuatro primeros elementos de la tupla a
+a[2:]    # desde el tercer elemento hasta el final 
+a[::-1]  # la tupla en reversa  
+```
+
+### Funciones y métodos aplicables a tuplas {#sec:funcionesAplicablesATuplas} 
+
+La función `len()` regresa el número de elementos que contiene una tupla, el  método  `.index(x)` regresa el índice que le corresponde al elemento  `x` en la tupla, si el elemento está más de una vez regresa el índice de la primera ocurrencia, en caso que `x` no esté ocurre un error. El método  `.count()` regresa el número de veces que un elemento está en la tupla, en caso de no estar regresa creo,  a continuación  se muestra como usarlos sobre la tupla `t1` creada arriba    
+```{python}
+print(len(t1)) # Imprime  la longitud  de la tupla
+t1[len(t1)-1]  # recupera el último elemento de la tupla t1
+t1.index(4)    # índice correspondiente al primer 4 en t1
+t1.count(4)    # cuántas veces está 4 en t1 
+```
+Habrá notado la diferencia en el llamado a `len()` frente a `.index()` y `.count()`: `len()` es una función genérica de Python , es independiente del objeto y puede aplicarse a diferentes tipos de objetos, mientras que los dos últimos son *métodos*, definidos sobre la clase *tuple*. Cuando se crea una tupla se le asocian los métodos propios de la clase, es decir,  el método está asociado al objeto. Las funciones sólo se pueden llamar por su nombre, ya que se definen  de forma independiente, pero los métodos no pueden ser llamados únicamente  por su nombre, necesitamos invocar la clase por una referencia de esa clase en la que está definida. Esa es la razón por la que **no usamos** `index(t1,4)` o  `count(t1,4)` sino `t1.index(4)` o  `t1.count(4)` porque estos son  métodos definidos sobre la clase `tuple`, mientras que `len()` es una función a la cual se le entrega una tupla y regresa su longitud, ella  se puede usar con otros tipos de contenedores, incluso con cadenas de caracteres. 
+
+Para saber si un elemento hace parte de una tupla, usamos el operador  `in` el cual regresa un valor lógico  `True` o `False` dependiendo de si el elemento se encuentra o no  en la tupla.  
+```{python}
+4 in t1     # True sí 4 está en t1, False si no  
+"x" in t1   # True sí  "x" está en t1,  False si no 
+"abc" in t1 # True sí "abc" está en t1,  False si no 
+```
+
+### Operaciones con tuplas. 
+
+Se pueden concatenar y replicar  tuplas usando los operadores  `+`  y  `*` de la siguiente forma 
+```{python}
+Trats=("T1","T2","T3") 
+(2,3,4) + Trats # Concatena la tupla (2,3,4) con Trats 
+Trats*3         # replica la tupla Trats tres veces 
+(2,3,4)*2       # replica la tupla (2,3,4) tres veces 
+```
+
+
+### Iterar sobre una tupla. 
+
+Una tupla es un objeto *iterable*, es decir, se pueden recorrer uno tras otro sus elementos usando bucles, a continuación un ejemplo usando `for` 
+```{python}
+for i in Trats:
+    print(i) 
+```
+
+### Ejemplo de aplicación.   
+
+En el siguiente bloque de código se generan datos de una población normal con media cero y desviación estándar 10. Luego se usa la función  `shapiro` para llevar a cabo la prueba de
+*Shapiro Wilks* sobre los datos. Lo que se quiere resaltar es que la función regresa una tupla que tiene como primer elemento el estadístico $W$ y en la segunda posición el $p-$valor de la prueba, veamos 
+
+```{python}
+import scipy.stats as s  
+import numpy as np
+np.random.seed(seed=123) ### para que el ejemplo sea reproducible 
+n = s.norm(0,10) #se instancia una v.a normal de media 0 y sd 10
+datos=n.rvs(100) # muestra de tamaño 100 de la normal 
+res=s.shapiro(datos)  
+#print(res) # se imprime la respuesta  
+type(res) # el tipo de objeto 
+```
+Note que `res`no es una tupla, pero se pueden recuperar los valores $W$ y $p$ mediante el desempaquetado o mediante el indexado como si lo fuera 
+```{python}
+W,p=res  # desempaquetado, equivalente a W=res[0] y p=res[1]
+```
+si estamos escribiendo un informe donde sea necesario reportar el resultado de la prueba podríamos usar    
+```{python eval=FALSE}
+print("Estadístico de Shapiro - Wilks, %0.3f, p_valor = %0.4f" %res)
+```
+
+### ¿Cómo saber si un objeto de Python es una  tupla? 
+
+En algunas aplicaciones es necesario verificar si un objeto pertenece o no a una clase. Por ejemplo, para dirigir el flujo de ejecución del código de programación de una función: si el objeto entregado es una tupla, ejecute ciertas líneas de código, de lo contrario ejecute otras líneas. La función `isinstance(objeto,tipo)` regresa `True` si la clase del `objeto` entregado corresponde a `tipo`, en caso contrario regresa `False`. 
+```{python}
+isinstance(t1, tuple)
+type(t1) is tuple
+```
+Otra forma es usando la función `type()`, como se muestra a continuación
+```{python}
+type(t1) is tuple
+type(4) is tuple
+```
+esta última línea regresa `False` porque el número  `4` no es una tupla. En las siguientes líneas se ilustra como indagar por los tipos de datos más usados en estadística 
+```{python eval=FALSE}
+type(x) is int    # True si x es un entero False en caso que no
+type(x) is float  # True si x es un real False en caso que no
+type(x) is str    # True si x es un string  False en caso que no
+type(x) is bool   # True si x es un lógico  False en caso que no
+```
+A manera de ejemplo, programar una función que reciba un objeto y en caso que este sea una tupla regrese el mensaje  `'Es una tupla'` en caso contrario regrese `'No es una tupla'` 
+
+```{python}
+# Se define la función 
+def verificartupla(x):
+  if(type(x) is tuple):
+    print("Es una tupla")
+  else:
+    print("No es una tupla")
+# Fin de definición de función
+```
+
+
+```{python eval=FALSE}
+# Uso de  la función 
+verificartupla(t1) # Retorna:  Es una tupla
+verificartupla("hola") # Retorna:  No es una tupla
+```
+
+
+### Ejercicios 
+
+
+1. Escribir una función que reciba una tupla (se debe verificar que sea una tupla) y cuente cuántos elementos contiene de tipo `float` (reales), `int` (enteros), `str` (cadenas) y `bool` (lógicos). En caso de contener objetos de otro tipo los cuente como otros.
+2. Escriba lineas de código Python que permita sumar los elementos numéricos de una tupla, por ejemplo para la tupla ` (3,False,'x',2.5,1.5,'n') ` se debe obtener $3+2.5+1.5=7$.
+3. Escriba lineas de código Python que permita promediar los elementos numéricos de una tupla.
+4. Como se estudió en la sección \@ref(sec:funcionesAplicablesATuplas), el método `.index(val)` aplicado a una tupla regresa el índice donde por primera vez se encuentra `val`. Programe una función que tome una tupla y un valor, en caso que el valor esté en la tupla debe regresar una tupla que contenga los  indices que le correspondan al valor entregado. Por ejemplo, si la tupla es `(9,5,2,6,5,3,8,5,3)` y el valor entregado es `5`, la función debe regresar `(1,4,7)`, la tupla con los índices que corresponden a `5`; si el valor entregado es 6, la función debe regresar la tupla unitaria  `(3,)`;  si el valor entregado es 4, la función debe imprimir el mensaje `4 no está en la tupla`      
+
+## Listas {#sec:listas}  
+
+Las listas sirven para agrupar objetos de diferente tipo, aunque típicamente se usan para alojar datos de la misma naturaleza (números, caracteres, lógicos, ...), son indexadas y, a diferencia de las tuplas, son **mutables**, es decir, se les puede agregar, quitar y cambiar elementos después de creadas. Las listas soportan todas las características de las tuplas, pero es posible adicionar, remover y modificar sus elementos. 
+
+### Creación  
+
+Para crear una lista colocamos los elementos dentro de corchetes de la siguente forma:  
+
+```{python}
+l1=[-5,-4,-3,-2,-1,1,2,3,4,5] # lista de números enteros
+l2=[2,"a",True]    #lista con elementos de distinto tipo
+print(l2,type(l2))
+```
+
+```{python echo=FALSE}
+nl1=len(l1)
+```
+
+### Indexado de listas {#IndexadoDeListas}
+
+Cada elemento de una lista está asociado con un *índice* que refleja su posición en el arreglo. Como en  las tuplas,  el primer elemento tiene índice 0, el segundo índice 1 y así sucesivamente. Asociados con la lista `l1` anterior tenemos `r py$nl1`   índices, iniciando en 0 y terminando en `r py$nl1-1`. Para acceder al elemento con índice 3, es decir, al **cuarto** elemento de la lista, escribimos `l1[3]` que corresponde a 
+```{python}
+l1[3] # Cuarto elemento de la lista l1
+```
+
+Python permite **índices negativos**, lo cual conduce a indexar por la derecha. `l[-1]` corresponde al último elemento de la lista, `l[-2]` corresponde al anterior a `l[-1]` y así sucesivamente. Esto también es aplicable a tuplas.  
+
+```{python}
+l1[-1] # Último de la lista l1
+l1[-2] # Penúltimo  de la lista l1
+```
+
+### Inserción, adición y borrado de elementos en una lista 
+A diferencia de las tuplas, las listas se pueden modificar insertando, adicionando o borrando elementos, veamos como se usa el método `insert()` para insertar el número $-6$ como primer elemento de la lista  
+```{python}
+l1.insert(0,-6)
+print(l1)
+```
+En `l1.insert(0,-6)` el primer argumento, corresponde al  índice donde se insertará el número dado en el segundo argumento (`-6`). La lista  `l1` ahora tiene un elemento más, $-6$, en el índice 0 y el número $-5$ que estaba en este índice  pasó al índice 1. Para agregar un elemento al final de la lista se usa el método  `append()` como se muestra a continuación 
+```{python}
+l1.append(6) 
+print(l1)
+```
+note que se ha agregado `6` al final de la lista `l1`. Es posible adicionar más de un elemento al final de la lista concatenando otra lista con la operación `+`, análogo a como se hace con tuplas.   
+```{python}
+l2+[4,5,6]  
+print(l2)
+```
+en este caso la lista `l2` no se modifica, para conseguirlo usamos    
+```{python}
+l2=l2+[4,5,6]  
+print(l2)
+```
+Para borrar un elemento de una lista se usa `del lista[i]` donde `i` corresponde al índice del elemento a  eliminar. Borremos el elemento `'a'` de la lista `l2`, (`i=1`)
+```{python}
+del l2[1]  
+print(l2)
+```
+Mientras que `del` elimina elementos de una lista por posición, el método `remove()` los elimina por valor, seguidamente borramos el elemento `4` de la lista `l2`   
+```{python}
+l2.remove(4)  
+print(l2)
+```
+si en la lista hay más de un elemento con el valor dado a `remove()` se elimina el de índice más pequeño, es decir, el primero que aparezca en la lista, veamos el siguiente ejemplo     
+```{python}
+l3=[2,5,4,-1,4,3,0,-2] # en esta lista 4 está dos veces
+l3.remove(4)
+l3
+```
+observe que se ha eliminado el primer 4. Otro método para eliminar elementos de listas es `pop()` que recibe un índice, elimina el elemento que corresponde  pero además regresa el elemento eliminado  
+```{python}
+l3.pop(2) # regresa -1 (índice 2)
+print(l3) # l3 queda modificada, sin -1   
+```
+si no se entrega índice el método  `pop()` remueve  (y regresa) el último elemento de la lista.      
+```{python}
+l3.pop()  # regresa -2 (el último elemento de l3)
+print(l3) # l3 queda modificada, se remueve -2   
+```
+
+
+### Longitud de la lista. 
+
+Similar a las tuplas, usamos la función `len()` para obtener la longitud de una lista 
+```{python}
+len(l2)
+```
+como una aplicación, podemos combinar las funciones `del` y `len()` para borrar el último elemento de una lista 
+```{python}
+del l2[len(l2)-1] 
+```
+
+### Indexación de listas
+
+#### Índice de un elemento. 
+Con el método `.index()` se recupera el índice que corresponde a un valor en la lista, si el valor está en la lista más de una vez se regresa el primer índice. 
+```{python}
+print(l1)
+l1.index(-1) # -1 tiene índice 5 
+l3=[2,5,4,-1,4,3,0,-2] # en esta lista 4 está dos veces 
+l3.index(4) # índice del primer 4 
+```
+
+#### Sublistas. 
+
+Para extraer una sublista de una lista empleamos la sintaxis `l[i:j]`, `i` corresponde al índice del elemento inicial a partir del cual, incluido, comenzará la sublista, mientras que `j` indica el extremo superior, la sublista llegará hasta el elemento con índice `j-1`, veamos 
+
+```{python}
+l1
+l1[2:7]
+```
+`l[i:]` es una sublista de `l` que inicia en el índice `i`  hasta el final de la lista, análogamanete `l[:j]` es una sublista que inicia en el índice cero de la lista hasta el índice `j-1`,  `l[:]` regresa la lista completa.     
+```{python}
+l1[2:]
+l1[:4]
+l1[:]
+```
+
+
+#### Verificar si un elemento está en la lista 
+
+De manera análoga a como se hizo con las tuplas se puede verificar si un elemento hace parte de una lista  con el operador `in`, si el elemento dado está en la lista se obtiene  `True`, en caso contrario, `False`     
+```{python}
+print(-2 in l3, 6 in l3)
+```
+
+
+### Otras formas de crear listas
+
+#### La función `list()`.  
+
+Es posible construir listas a partir de `tuplas`, `diccionarios` ,  `sets` (conjuntos) y otros objetos, mediante la función `list()`. Veamos un ejemplo  
+```{python}
+lt1=list(t1) # se crea lista a partir de la tupla t1 
+print(lt1)
+print(type(lt1)) 
+```
+
+#### La función  `range()`.   
+En el siguiente ejemplo se usa la función `range()` que representa una secuencia *inmutable* (como las tuplas), estrictamente creciente o decreciente, de números. Esta función se utiliza en bucles `for` para realizar un número específico de iteraciones en función de un valor, que se reduce o aumenta en una constante (`step`) hasta que se alcanza un límite. Ilustremos su uso  con ejemplos 
+```{python}
+range(9) # secuencia desde cero hasta 8
+```
+La función `range()` regresa un objeto de tipo `range`, pero se puede convertir en una lista mediante la función `list()`  
+```{python}
+print(range(9),type(range(9)))
+```
+
+```{python}
+list(range(9))
+```
+
+
+```{python}
+# secuencia desde 3 hasta 22-1 incrementando en 2  
+list(range(3,22,2)) 
+```
+En el ejemplo anterior 3 es el parámetro inicio (`start`), entero a partir del cual se devolverá la secuencia, 22 es el entero que indica el final (`stop`); la secuencia termina en el entero más grade que es menor o igual a `stop-1`, por último 2 es el paso, (`step`), que determina el incremento entre cada entero de la secuencia. Se puede iterar sobre el objeto (`range`) sin necesidad de convertirlo a una lista, uso que es bastante frecuente cuando se programa en Python    
+```{python}
+for i in range(3,15,3):
+  print(i)
+```
+
+#### Comprensión de listas {#ComprensionDeListas}  
+
+La comprensión de listas es una forma elegante de definir y crear listas basadas en listas existentes. Es una forma concisa de generar una lista al aplicar una operación a los elementos de otra lista, esto se ilustra en el siguiente ejemplo: 
+```{python}
+[-2+0.5*x for x in range(9)]
+```
+lo que se hace en el código anterior es evaluar la expresión $-2+0.5x$ para cada valor   $x$ en la secuencia generada por la función `range()`. Otro ejemplo, suponga que tiene una lista con valores de temperatura expresada en grados centígrado ($C$) y se le pide que haga la conversión a grados Fahrenheit ($F$) mediante la transformación $F=\frac 9 5 C+32$, podemos hacer la conversión de la siguiente forma   
+```{python}
+C=[25,32,36,19,20,24] # temperaturas en grados centígrados
+F=[9.0/5*x+32 for x in C ] # temperaturas en grados Fahrenheit
+F
+```
+En la comprensión de listas se pueden utilizar sentencias condicionales para generar nuevas listas, veamos un ejemplo: de la lista `l3` obtener una sub-lista que contenga sólo los  elementos positivos.    
+```{python}
+print(l3) 
+[x for x in l3 if x>0]
+```
+
+### Listas anidadas. 
+Como con las tuplas, es posible tener dentro de una lista otras listas o tuplas u objetos de distinto tipo, a continuación se crea una lista que *anida* las  listas `C` y `F` creadas anteriormente 
+```{python}
+T=[C,F]
+```
+para recuperar el tercer elemento de la lista `F`, que está anidada en `T` se usa la indexación, recuperando primero a `F` y luego al elemento dentro de `F`
+```{python}
+T[1][2]
+```
+
+
+### Ordenar una lista. 
+El método `sort` ordena los elementos de una lista, por defecto lo hace de manera ascendente, es decir, de menor a mayor, si se quiere que el orden sea descendente usamos la opción `reverse=True`. 
+```{python}
+l3
+l3.sort()
+l3
+l3.sort(reverse=True) #orden descendente 
+l3
+```
+
+
+### Ejercicios 
+
+* Use la compresión de lista para extraer de una lista de enteros la sublista de los que sean pares. Por ejemplo, de la lista que se genera por `range(20)` extraer todos los números pares y crear una lista con ellos.
+
+* Función seno  aplicada a cada elemento de una lista. En el módulo `math` esta definida la función `sin`, pero sólo acepta valores reales simples, es decir no es una función **vectorizada**. Use la compresión de lista para crear función `sinv`  que tome una lista de valores reales y entregue una lista con los correspondientes senos de las componentes calculados usando la función `sin` del paquete `math`. Con la línea de código `from math import sin` se tiene disponible la función, luego se puede usar como  `sin(0.2)`. 
+
+* Consulte los siguientes métodos asociados a listas y muestre ejemplos de su uso 
+  + `count()` 
+  + `split()`
+  + `extend()`
+
+
+## Arreglos {#sec:arreglos} 
+
+
+Los arreglos en Python se pueden entender como una variante de las listas donde todos los elementos deben ser del mismo tipo. En el paquete básico (o estándar) de Python hay un tipo de objeto llamado `array`, pero este no es eficiente para cálculos estadísticos y matemáticos, por tanto no lo trataremos en este libro. Estudiaremos los arreglos  definidos en el paquete *Numerical Python*,  ampliamente conocido como **NumPy** [@harris2020array]. Este módulo debe estar instalado previamente y se carga con el comando `import numpy`. Los arreglos de `numpy` tienen  las siguientes características 
+
+
+* Se pueden llevar a cabo un amplio número de operaciones matemáticas sobre el arreglo completo, haciendo que no sea necesario el uso de bucles para recorrer los  elementos del arreglo. Característica conocida como  *vectorización*
+* Los arreglos con un solo índice (o un índice unidimensional) se conocen como vectores.
+* Arreglos con dos índices (o un índice bidimensional) se usan como una  eficiente estructura de datos, matrices y tablas.
+* Los arreglos pueden tener mas de dos índices, es decir, pueden ser $n-$dimensionales. 
+
+
+### Creación de arreglos 
+
+Lo primero que haremos para crear un arreglo es cargar el paquete `numpy`, lo haremos con el nombre `np` como es la costumbre 
+```{python}
+import numpy as np
+```
+A continuación se crean arreglos de `numpy` a partir de tuplas y listas. 
+
+
+```{python}
+t=(2,3,4,1) # una tupla 
+at=np.array(t) # un arreglo de numpy creado a partir de t  
+print(at,type(at))
+```
+en la salida anterior `ndarray` significa *arreglo $n$ dimensional*. A continuación se ilustra la creación de arreglos a partir de listas  
+```{python}
+l2=[7.5,8.1,9] # una lista  
+al=np.array(l2) # arreglo de numpy a partir de l2 
+print(al,type(al))
+```
+Con el siguiente código se crea un arreglo bidimensional, una matriz de $2$ filas y $3$ columnas, observe que se entrega una lista con dos listas anidadas de la misma longitud, las listas anidadas pasan a ser las filas de la matriz   
+```{python}
+a2=np.array([[1, -1  , 0], [0, 1, -1]])
+print(a2,type(a2))
+```
+Análogamente se pueden crear arreglos a partir de tuplas anidadas 
+```{python}
+t2=((2,3),(4,1)) 
+ta2=np.array(t2)
+print(ta2,type(ta2))
+```
+Con los métodos,  `.ndim` y `.shape` se obtiene el número de dimensiones y la longitud de cada dimensión de un arreglo
+```{python}
+print("Dimensiones de a2 ", a2.ndim )
+print("Longitud de cada dimensiones de a2 ",a2.shape)
+```
+El método  `.reshape`  sirve para crear arreglos $n-$dimensionales a partir de un arreglo unidimensional veamos un ejemplo. Ingresar la matriz \begin{equation}
+A=\begin{bmatrix}
+  9 & 137 &297 &261 \\
+  136 & 2114 &4176 &3583 \\
+  269 &4176 &8257 &7104 \\
+  260 & 3583 &7104 &12276
+\end{bmatrix} 
+(\#eq:matrizxtxe)
+\end{equation}  como un arreglo de  `numpy`. 
+```{python}
+# los datos en un arreglo unidimensional 
+Aa=np.array([9,137,297,261, 
+            136,2114,4176,3583,
+            269,4176,8257,7104, 
+            260,3583,7104,12276])
+#se convierte el arreglo en un arreglo bidimensional
+A=Aa.reshape(4,4);A
+```
+note que de forma predeterminada el llenado se hace por filas, es decir, los primeros cuatro elementos del arreglo conforman  la primera fila, los cuatro siguientes la segunda y así sucesivamente. En caso que se requiera, podemos conseguir que el llenado de la matriz se haga por columna, en ese caso se obtendría la transpuesta de la matriz \@ref(eq:matrizxtxe) dada en el ejemplo.  
+```{python}
+np.reshape(Aa,(4,4),order="F") 
+```
+no se confunda, la `F` **no** es de fila, es de `Fortran`^[Fortran: Lenguaje de programación de alto nivel que se usa principalmente en aplicaciones científicas y matemáticas].    
+
+### Arreglos especiales 
+
+El paquete `numpy` tiene métodos para creación de arreglos especiales, por ejemplo, arreglos de ceros, de unos, en general arreglos con algún valor repetido, con cierta repetición de series de números, con números de un tipo específico de datos (`dtype`). A continuación creamos un arreglo de $n$ ceros y otro con tantos ceros y con el tipo de datos que tiene  la lista  `l2`  
+```{python}
+a0s=np.zeros(5) # arreglo de 5 ceros 
+print(a0s,type(a0s))
+c=np.zeros_like(l2)
+print(c,type(c))
+``` 
+Análogo al anterior pero con unos. 
+```{python}
+u=np.ones(4) # arreglo de 4 unos  
+u2=np.ones_like(t2) # arreglo de 1 con la misma longitud y tipo de t2   
+print(u2)
+``` 
+La función `linespace()`  crea un arreglo con $n$ elementos con valores separados uniformemente en el intervalo $[p,q]$, estos arreglos son útiles al momento de graficar funciones   
+```{python}
+a=np.linspace(0,1,5) 
+print(a,type(a)) 
+``` 
+Observe que el arreglo anterior,  creado por  `linespace()`, tiene $n=5$ elementos, inicia en $p=0$ y termina en $q=1$. La función `arrange()` del paquete `numpy` se usa de manera similar a la función `range()` que estudiamos en la sección de listas, con la diferencia que la primera puede generar secuencias de números reales (no solo enteros) con incrementos que también pueden ser  números reales.     
+
+```{python}
+np.arange(1.2,6,0.5)
+``` 
+
+
+### Matrices especiales 
+El paquete `numpy` cuenta con funciones para la creación de matrices especiales, como la identidad, nula, escalar entre otras. En cuanto a la matriz identidad, hay dos funciones para crearla: `eye()` e `identity()`
+```{python}
+id=np.eye(2)
+id
+``` 
+
+```{python}
+id2=np.identity(3)
+id2
+``` 
+La diferencia entre `eye()` e `identity()` es que con `eye()` se puede indicar, con el argumento `k`, cuál de las diagonales de la matriz se llenará de unos, de manera predeterminada `k=0`, si se indica `k=1` se llena con unos la primera diagonal por encima de la diagonal principal, si `k<0` se llenan las diagonales por debajo de la principal. 
+Ya que las matrices escalares son matrices diagonales con todos los elementos iguales en la diagonal, es decir, son de la forma $c\times I$, donde $I$ es la identidad, podemos crear matrices escalares multiplicando la identidad por la constante $c$, de la siguiente forma (con $c=3$): 
+```{python}
+E2=3*id2
+E2
+```
+A continuación se crea un arreglo bidimensional de $4\times 4$ con todos los elementos iguales, en este caso, a $2$. 
+```{python}
+np.full((4,4),2)
+``` 
+
+### Tipos de datos en los arreglos
+
+Numpy tiene 5 tipos numéricos básicos que representan booleanos (`bool`), enteros (`int`) , enteros sin signo  (`uint`), punto flotante (`float`) y complejo (`complex`). Los tipos con números en su nombre, por ejemplo `int64`, indican el tamaño en bits del tipo (es decir, cuántos bits se necesitan para representar un solo valor en la memoria) 
+
+Con el método `dtype` asociado a los arreglos de `numpy` podemos recuperar el tipo de datos que contiene el objeto y también crearlos para que contengan el tipo de dato deseado. A continuación se pide el tipo de dato que contiene el arreglo `a` 
+```{python}
+a.dtype 
+```
+para crear un arreglo que contenga datos de tipo real `float` de 64 bits  usamos el siguiente código 
+```{python}
+ar1 = np.array([1, 2, 3], dtype=np.float64)
+print(ar1,ar1.dtype) 
+```
+a continuación arreglos con otros tipos de datos
+```{python eval=FALSE}
+# enteros de 64 bits 
+ar3 = np.array([1, 2, 3], dtype=np.int64) 
+# enteros de 32 bits 
+ar3 = np.array([1, 2, 3], dtype=np.int32) 
+# enteros de 16 bits 
+ar4 = np.array([1, 2, 3], dtype=np.int16)
+# enteros de 8 bits 
+ar5 = np.array([1, 2, 3], dtype=np.int8) 
+# Booleanos (True, False) 
+ar6 = np.array([1, 0, 1], dtype=np.bool_)
+print(ar6,ar6.dtype)
+```
+Podemos hacer la conversión de un tipo a otro, por ejemplo, para convertir el arreglo `ar1`, que es de tipo `float`, a entero de 32 bits,     procedemos de la  siguiente forma 
+```{python}
+ar1int=ar1.astype(np.int32)
+print(ar1int,ar1int.dtype)
+```
+
+### Indexación en arreglos de NumPy
+
+Los arreglos $n-$dimensionales de `numpy` se indexan usando la indexación estándar de Python (`x[obj]`), que hemos estudiado con tuplas (sección \@ref(sec:tuplas))  y listas (sección \@ref(sec:listas)). Hay diferentes tipos de indexación disponibles según el objeto: indexación básica, indexación avanzada y acceso de campo.
+
+#### Indexación básica {#IndexacionBasica}
+
+
+##### Indexación de un solo elemento
+
+La *indexación de un solo elemento* funciona exactamente igual que para otras secuencias estándar de Python. Inicia en cero y acepta índices negativos para la indexación desde el final del arreglo. 
+
+```{python}
+a=np.arange(10) # arreglo de 0 a 9
+a[2] # tercer elemento del arreglo 
+a[-2] # el segundo desde el final hacia adelante  
+```
+Un ejemplo con arreglos bidimensionales: elemento en la segunda fila y  tercera columna de la matriz $A$, es decir, el elemento $a_{23}$    
+```{python}
+A[1,2]
+```
+segunda fila, penúltima columna de $A$ 
+```{python}
+A[1,-2] 
+```
+Cuando se tiene un arreglo $n-$dimensional y se entrega  un único valor, predeterminadamente el valor se toma como índice de la primera dimensión (en el caso de matrices, la fila), a continuación se selecciona la segunda fila de $A$.  
+```{python}
+A[1] 
+A[1][2] #el tercero de la segunda fila, equivalente a A[1,2] 
+```
+
+##### Segmentación 
+
+La *segmentación* se produce cuando en `x[obj]` `obj` es de la forma `inicio:fin:paso`, un entero o una tupla de objetos de segmentación
+```{python}
+a=np.arange(10) # arreglo de 0 a  9
+a[1:7:2] # 1:7:2 de 1 a 7 de dos en dos  
+a[5:]    # del sexto elemento del arreglo a en adelante.    
+```
+
+
+#### Herramientas de indexado dimensional  
+Las herramientas de indexado dimensional permiten seleccionar toda una dimensión, por ejemplo en el caso de matrices, toda una fila o conjunto de filas, o toda una columna o grupo de columnas, en general seleccionar submatrices, veamos algunos ejemplos  con la matriz \@ref(eq:matrizxtxe) 
+
+```{python}
+A[1:,]  # de la fila dos de A  en adelante 
+A[:,1]  # segunda columna de A 
+A[(0,2),] # fila 1 y 3 de A 
+```
+
+#### Indexación avanzada  
+
+
+
+##### Indexación entera 
+
+La indexación entera de arreglos permite la selección de elementos arbitrarios en el arreglo en función de su índice $n-$dimensional. Cada arreglo de enteros representa los índices en la correspondiente dimensión. Se permiten valores negativos en los arreglos  de índices y funcionan como se explicó en las secciones  \@ref(IndexadoDeListas) y \@ref(IndexacionBasica): en el siguiente ejemplo se seleccionan del arreglo `a` el elemento con índice 3 dos veces, luego el de índice cero y por ultimo el de índice 8:
+
+```{python}
+a[np.array([3, 3, 0, 8])] 
+```
+
+
+```{python}
+a[np.array([3, 3, -3, 8])]
+```
+El código siguiente seleccionan los elementos en las esquinas de la matriz $A$ \@ref(eq:matrizxtxe)  
+```{python}
+A[np.array([0, 0, 3, 3]),np.array([0, 3, 0, 3])]
+```
+A continuación se selecciona la submatriz (menor) de $2\times2$ de la esquina superior izquierda de la matriz A. 
+```{python}
+A[0:2,0:2] 
+```
+otra forma de conseguir el mismo resultado es mediante
+```{python}
+A[np.ix_([0,1],[0,1])]
+```
+
+##### Indexación booleana  {#IndexacionBooleana} 
+Podemos usar como índice un arreglo de valores lógicos, este tipo de indexación es muy útil porque permite extraer valores que cumplan cierta condición, por ejemplo, extraer los pares, los que sean mayores que la media, los que estén por debajo de primer cuartil, entre otras condiciones, veamos como se hace 
+```{python}
+a[a%2==0] 
+```
+en el código anterior se está usando el operador `%` que regresa el residuo de la división,  `a%2==0`  regresa `True` para aquellos elementos del arreglo que sean pares y `False` en caso contrario. El resultado es que se extraen del arreglo `a` aquellos elementos que sean pares, es decir los que se correspondan con `True` en el vector lógico. A continuación otros ejemplos 
+```{python}
+a[a>5] # valores del arreglo a mayores que 5  
+a[a<=3] # valores del arreglo a menores o iguales que 3
+```
+
+## Diccionarios 
+
+Un diccionario es un objeto muy flexible de Python  para almacenar diferentes tipos de datos y objetos, tales como números, caracteres, listas y arreglos. Como estudiamos en la sección \@ref(sec:listas), una lista es una colección de objetos indexada desde cero (0) hasta el número de objetos menos uno $(n-1)$. En lugar de buscar un elemento a través de un índice de números enteros puede ser más fácil, práctico (o útil) usar texto,  los diccionarios nos permiten identificar cada elemento por una clave `(key)` que por lo general es un *string*. Rigurosamente hablando, un diccionario en Python es una lista donde los índices pueden ser texto. 
+
+Suponga que necesitamos guardar las edades de tres personas:  Brenda, Luis y Diego. Para eso podemos usar una lista 
+```{python}
+edad=[22,15,19]  
+```
+pero de esta forma debemos recordar la secuencia de nombres, por ejemplo que el índice cero corresponde a Brenda, el índice 1 a Luis  y el 2 a Diego. Esto es, la edad de Luis se obtiene como `edad[1]`. Un diccionario con los nombres de las personas  como índice es más conveniente porque esto permite escribir `edad['Luis']` para recuperar la edad de Luis, sin tener que recordar el índice numérico.
+
+### Creación de diccionarios
+
+#### Creación mediante `{clave:valor, ...}`  
+Los diccionarios se crean por una de las dos siguientes formas 
+```{python}
+edad={'Luis':15,'Brenda':22,'Diego':19}
+print(edad)
+```
+
+#### Creación mediante la función `dict()` 
+
+```{python}
+edad=dict(Luis=15,Brenda=22,Diego=19) 
+print(edad)
+```
+
+#### Creación mediante la función `dict(zip())` 
+
+Se le entrega a la función `zip()` dos elementos iterables ya sea una cadena, una lista o una tupla, de la misma longitud y `dict()` devolverá un diccionario cuya clave $i-$ésima es el elemento $i$ del primer iterable y el valor asignado a esa clave es $i-$ésimo del segundo iterable
+
+
+```{python}
+nombres=("Luis","Brenda","Diego")
+edades=(15,22,19)
+edad=dict(zip(nombres,edades));edad
+```
+
+Los índices de texto en los diccionarios se conocen como claves *(Keys)*. En el diccionario `edad` las claves son `'Luis'`,  `'Brenda'` y `'Diego'` y los valores son 15, 22 y 19. 
+
+En cualquier momento, después de su creación, se puede adicionar una pareja `texto:valor` al diccionario, por ejemplo 
+
+```{python}
+edad["Jaime"]=21 
+print(edad)
+```
+En el ejemplo anterior todos los valores del diccionario son números enteros, pero es  posible crear diccionarios con diferentes tipos de valores, como en el siguiente ejemplo 
+```{python}
+d1= {
+     "clave1":234,
+     "clave2":True,
+     "clave3":"Valor 1",
+     "clave4":[1,2,3,4]}
+```
+
+como con  los objetos estudiados en las secciones anteriores, la función `type()` nos permite confirmar si un objeto de Python es un diccionario  
+
+```{python}
+type(d1)
+type(d1) is dict 
+```
+
+¿El valor en `clave2` del diccionario ` d1` es un entero?
+
+```{python}
+type(d1['clave2']) is int  
+```
+
+### Acceso a claves y valores de un diccionario
+
+Para verificar si una clave está en el diccionario `d` usamos `clave in d`, lo cual regresará un valor lógico, por ejemplo , ¿está la clave `Mary` en el diccionario `edad`?   
+
+```{python}
+'Mary' in edad 
+```
+Podemos usar la sentencia `if` para tomar decisiones, por ejemplo: en caso que se tenga el dato de  `Mary` en el diccionario se imprime su edad de lo contrario se imprime un mensaje informando que ese nombre no se encuentra 
+```{python}
+nombre='Mary'  
+if nombre in edad:
+  print("La edad de %s es %g" % (nombre,edad[nombre]) )
+else:
+  print("No hay datos para %s" % nombre )
+```
+
+```{python}
+nombre='Brenda'  
+if nombre in edad:
+  print("La edad de %s es %g años" % (nombre,edad[nombre]) )
+else:
+  print("No hay datos para %s" % nombre )
+```
+
+Tanto las claves como los valores en  un diccionario se pueden extraer y convertir a una lista, veamos 
+
+```{python}
+claves=edad.keys()
+print(claves) 
+print(type(claves)) 
+```
+note que `claves`, el objeto regresado por el método  `.keys()`, no es una lista, pero podemos crearla con la función `list()`  
+```{python}
+list(claves) 
+```
+a continuación se recuperan los valores del diccionario `edad` usando el método `.values()`, en este caso en la misma linea de código se hace la conversión a lista    
+```{python}
+valores=list(edad.values())  
+print(valores) 
+```
+De manera análoga a tuplas, listas y arreglos es posible iterar sobre las claves de un diccionario usando bucles, por ejemplo  
+```{python}
+for nombre in edad:
+  print("La Edad de %s es %g años" % (nombre,edad[nombre] ) )
+```
+Suponga que deseamos la lista anterior ordenada alfabéticamente por los nombres, eso podemos lograrlo con la función `sorted()` , la cual regresa una lista con  las claves ordenadas 
+```{python}
+sorted(edad)
+for nombre in sorted(edad):
+  print("La Edad de %s es %g años" % (nombre,edad[nombre] ) )
+```
+la función `sorted()` no ordena ni modifica el diccionario, solo regresa una listas que contiene las claves ordenadas, en el siguiente bloque de código creamos un nuevo diccionario ordenado a partir de `edad` 
+```{python}
+edad_o={}
+for clave in sorted(edad):
+    edad_o[clave]=edad[clave]
+print(edad_o)
+```
+Alternativamente, podemos ordenar los elementos del diccionario por las claves usando el método `.OrderedDict()` del módulo `collections`.     
+```{python}
+import collections
+EdadOr=collections.OrderedDict(sorted(edad.items()))
+print(dict(EdadOr))
+``` 
+observe que el ordenamiento se hace de manera ascendente, para hacerlo en orden descendente use `reverse=True` en la función `sorted()`   
+```{python, eval=FALSE}
+sorted(edad,reverse=True) 
+```
+Se puede hacer una copia de un diccionario mediante el método `.copy()`  
+```{python}
+edadC=edad.copy()
+```
+como en el caso de las listas y arreglos, se puede borrar una entrada de un diccionario con `del`
+```{python}
+del edadC["Luis"] 
+edadC
+```
+
+### Otros métodos aplicables a diccionarios
+
+La mayoría de los métodos que estudiamos para listas son aplicables a diccionarios 
+
+#### Método pop
+Remueve específicamente una clave de diccionario y devuelve valor correspondiente. Lanza una excepción `KeyError` si no encuentra la  clave dada.
+```{python}
+edadC=edad.copy() # copia de edad 
+edadC.pop("Luis")
+edadC
+```
+observe que regresa la edad de Luis y que en `edadC` ya no está la clave `Luis`. El método `.popitem()` elimina el ultimo ítem del diccionario y regresa una tupla con la clave y el valor correspondientes   
+```{python}
+edadC=edad.copy() # copia de edad 
+edadC.popitem() 
+```
+
+#### Método `update()` 
+
+Recibe como parámetro otro diccionario. Si se tienen claves iguales, actualiza el valor de la clave repetida; si no hay claves iguales, este par clave-valor es agregado al diccionario.
+
+```{python}
+edad2={"Brenda":25,"Mary":18}  # Brenda ya está en edad
+edad.update(edad2);edad 
+```
+
+#### Método `.get()` 
+
+El método `get()` recibe una clave, devuelve el valor que le corresponde
+```{python}
+edad.get("Brenda")  
+```
+
+#### Método `.setdefault()` 
+
+Este método tiene dos usos: el primero es como el método `get()` y para agregar un nuevo elemento al diccionario
+```{python}
+edad.setdefault("Brenda")  
+```
+
+```{python}
+edad2.setdefault("Lila",16); edad2   
+```
+observe como se agrega al diccionario `edad2` una nueva pareja, `Lila:16`. 
+
+:::{.example #ejemploTuplasADict name="Tuplas a diccionarios"} 
+Considere la siguiente tupla, conformada por 6 tuplas anidadas:
+
+```{python}
+tup = (('A', 5), ('A', 7),
+       ('B', 2),('B', 9),('B', 1),
+       ('C',4) )
+```
+
+note que `'A'` está dos veces, `'B'` 3 veces y `'C'` una vez en la tupla. El ejercicio consiste en trasladar esta información a un diccionario donde `'A'`, `'B'` y `'C'` conformen las claves y los valores que coresponden a cada clave se organicen en una lista. 
+
+```{python}
+dicn = {} # diccionario vacío para guardar los datos  
+for clave, valor in tup: # se recorre la tupla 
+    if clave in dicn: # en caso que la clave ya esté en dicn 
+        dicn[clave].append(valor) # agrega el valor a la lista 
+    else: # en caso que aún no esté 
+    #anexa a dicn la clave con el valor como 
+        dicn[clave] = [valor]   
+dicn 
+```
+
+observe que la tupla inicial tiene longitud 6, mientras que la longitud del diccionario, que contiene la misma información es 3. Esta forma de guardar los datos es mucho más eficiente en cuanto al uso de memoria y espacio en disco duro. Otra forma de realizar la misma tarea es mediante la combinación de los métodos  `.setdefault()` y `.append()`  
+
+```{python}
+dicn = {} # diccionario vacío para guardar los datos  
+for clave, valor in tup:
+    dicn.setdefault(clave, []).append(valor)
+dicn 
+```   
+:::
+
+:::{.example #PoliComoDict name="Polinomios como un diccionario"}
+Las claves en los diccionarios no tienen que ser necesariamente cadenas de caracteres *(strings)*, en realidad cualquier objeto **inmutable** (como las tuplas) de Python puede usarse como clave. En este ejemplo se muestra como los diccionarios con enteros como claves se pueden usar para representar polinomios.
+
+Los datos asociados con el polinomio
+\begin{equation}
+p(x)=-1+x^2 + 3x^7
+(\#eq:polinomio)
+\end{equation} 
+se pueden expresar como un conjunto de pares coeficiente--exponente, en este caso el coeficiente $-1$ corresponde al exponente cero  para la variable $x$ ya que $-1=-1x^0$, el coeficiente 1 pertenece al exponente 2, el coeficiente 3 corresponde al exponente 7. Un diccionario se puede usar para hacer corresponder el exponente con el coeficiente. 
+```{python}
+p={0:-1, 2:1, 7:3} 
+for m in p:
+        print("El coeficiente es %g, el exponende es %d"%(p[m],m))
+```   
+A continuación se define una función que recibe el polinomio (como diccionario) y un valor de la variable $x_0$ y evalúa $p(x_0)$  
+```{python}
+def evalpoli(poli,x):
+    return  sum([poli[m]*x**m for m in poli])
+evalpoli(p,1) 
+```   
+así que el polinomio \@ref(eq:polinomio) en $x_0=1$, toma un valor de  3, es decir $p(1)=3$. Observe que en la definición de la función hemos usado la compresión de listas (sección  \@ref(ComprensionDeListas) ). La variable `m` varía sobre las claves del diccionario, luego se recupera el valor correspondiente a esa clave con `poli[m]` y se multiplica por `x` elevado a la `m`.      
+:::
+
+### Ejercicios 
+
+* __Vectorizar__ la función `evalpoli` definida en el ejemplo \@ref(exm:PoliComoDict), es decir, programarla de tal forma que tome un arreglo de `numpy`, una lista o una tupla con valores numéricos y regrese un arreglo con el polinomio $p()$ evaluado en cada elemento del objeto entregado.  
+
+
+## Series y marcos de datos (**data frames**)
+
+ 
+
+*Pandas* [@reback2020pandas] es el paquete de Python que proporciona estructuras de datos rápidas, flexibles y útiles para análisis estadístico, ofrece funciones que facilitan la entrada, organización y transformación  de datos. Las dos estructuras de datos principales de Pandas, `Series` (unidimensional) y `DataFrame` (bidimensional), manejan la gran mayoría de los casos de uso típicos en finanzas, estadísticas, ciencias sociales y muchas áreas de la ingeniería.
+
+### Series de Pandas
+
+Una _Serie_ de Pandas es un `ndarray` ( sección \@ref(sec:arreglos) ) unidimensional etiquetado. El objeto, que admite la indexación basada en enteros y etiquetas, proporciona una gran cantidad de métodos para realizar operaciones relacionadas con el índice. A continuación se muestra como crear series de Pandas. Lo primero es importar el paquete `Pandas`, lo hacemos con el nombre `pd` como es costumbre entre la comunidad de usuarios de este paquete.     
+```{python}
+import pandas as pd
+datoS=pd.Series([22,15,19]) 
+datoS
+```
+Cuando al crear la serie no se entregan las etiquetas o índices, de manera predeterminada la función `Series()` asigna etiquetas numéricas, como los indices de un arreglo de `numpy` o una lista. Note que la salida impresa de la serie además de los valores de las edades `22, 15  y 19`, imprimen las etiquetas (índices), asociadas a cada valor. Podemos asignar las etiquetas al momento de la creación de la serie 
+```{python}
+datoS=pd.Series([22,15,19],index=['a', 'b', 'c']) 
+datoS
+```
+podemos convertir un diccionario a una  serie de Pandas
+```{python}
+edad
+edadS=pd.Series(edad) 
+edadS
+```
+similar a los diccionarios, podemos recuperar los indices de una serie mediante el método `.index` y los valores con el método `.values`     
+```{python}
+edadS.index
+print(edadS.values,type(edadS.values))
+```
+observe que los valores de la serie  se recuperan como un arreglo de _NumPy_ (véase la sección \@ref(sec:arreglos)).   
+
+La recuperación de datos de una serie se hace de manera análoga a como se hace con los arreglos o los diccionarios, por indice, por etiqueta y por alguna condición, veamos algunos ejemplos. 
+```{python}
+edadS[1] # segundo elemento (por índice)
+edadS["Brenda"] # equivalente al anterior (por etiqueta)
+edadS[edadS>20] # por la condición mayor que 20  
+```
+
+#### Datos faltantes en series de Pandas
+
+Las series de Pandas tiene la propiedad de poder tratar con datos faltantes los cuales se representan como: `"NA" = Not available`, `"NaN" = Not a number`, `None = Null/nonetype object` a continuación se crean series que tienen datos faltantes 
+```{python}
+pd.Series([21, 15, None], index=['A', 'B', 'C']) 
+pd.Series([21, 15, np.nan], index=['A', 'B', 'C']) # na de numpy  
+```
+a partir de un diccionario con valores en `None` 
+```{python}
+edadDic={'A':12, 'B':15, 'C':None} 
+pd.Series(edadDic)
+```
+
+```{python}
+edadSN=pd.Series(edadDic,index=["A","B","D"])
+edadSN
+```
+La letra `D` no está como clave en el diccionario pero está como índice al crear la serie, por eso se le asigna `NaN`.   
+
+El método `.notnull()` nos permite conocer si en una serie de Pandas hay datos faltantes. En la siguiente salida, en la etiqueta `D`, donde hay un dato faltante resulta en `False`   
+```{python}
+edadSN.notnull()
+```
+el método `.all()` aplicable a una serie de Pandas de valores booleanos (`dtype: bool`) regresa `True` en caso que todos los valores de la serie sean `True` y `False` en otro caso 
+```{python}
+edadSN.notnull().all()
+```
+eso nos permite indagar si en una serie hay o no datos faltantes. Hay dos formas de proceder cuando se tienen datos faltantes: una es simplemente eliminarlos, lo cual se hace en series de Pandas con el método `.dropna()` y la otra se conoce como _imputación_, que consiste en estimar el (los) dato(s) faltantes mediante algún procedimiento.   
+```{python}
+edadSN.dropna()
+```
+se ha eliminado el dato faltante. Se cuenta con mucha literatura en cuanto a métodos de imputación, uno sencillo es el de medias, que consiste en reemplazar el dato faltante por el  promedio de los datos disponibles  
+```{python}
+edadSN.fillna(edadSN.mean()) 
+```
+se ha _imputado_ el dato faltante (`edadSN.fillna()`) reemplazándolo  por la media (`edadSN.mean()`) de los datos disponibles.
+
+
+### Marcos de datos de Pandas 
+
+El marco de datos de Pandas o _Pandas `DataFrame`_   es la estructura principal  de datos en el paquete Pandas. Es un arreglo en forma de tabla (bidimensional) con columnas de (potencialmente) tipos heterogéneos de datos. Los `DataFrame` son de tamaño mutable, sus filas y columnas (ejes) están etiquetados y se pueden efectuar operaciones aritméticas teniendo en cuenta dichas etiquetas. Los `DataFrames` de Pandas se pueden considerar como un contenedor similar a un diccionario para objetos que son series de Pandas.  
+
+#### Creación y operaciones con `data-frames`   
+
+Para crear un  `DataFrames` de Pandas lo primero que hacemos es importar el paquete *Pandas*, lo hacemos con el nombre  `pd` mediante la línea `import pandas as pd`, luego creamos un `DataFrame` de nombre `df` con dos columnas y cuatro filas.     
+
+```{python}
+import pandas as pd
+df = pd.DataFrame({"col1":[1,3,2,4,7,9,5],
+                   "col2":[9,0,2,1,7,3,4],
+                   "col3":["F","M","F","F","F","M","M"]})
+```
+Note el uso de un diccionario con listas como valores, las claves del diccionario pasan a ser los nombres de las columnas del marco de datos y los valores las columnas. Con los métodos `.head(k)` y `.tail(k)` podemos examinar las $k$ primeras y últimas filas, respectivamente.   
+```{python}
+df.head(4) # 4 primeras filas 
+df.tail(3) # 3 últimas filas 
+```
+Para obtener información sobre  la tabla de datos usamos el método `.info()` que  proporciona detalles esenciales de los datos: la clase de de objeto, el número de filas y columnas, el tipo de datos que contiene cada columna, la cantidad de memoria ocupada 
+```{python}
+df.info()
+```
+para recuperar concretamente  el número de filas y columnas de la tabla de datos podemos usar el método `.shape`, que regresa una tupla con dos elementos, el primero corresponde al número de filas  y el segundo al número de columnas
+```{python}
+df.shape 
+```
+El método `.index` regresa un objeto de clase `RangeIndex` que contiene la información de los índices asociados a las filas del marco de datos. Con la función `list()` podemos obtener una lista con los índices  
+```{python}
+df.index
+list(df.index) 
+```
+
+```{python echo=FALSE}
+nfil,ncol = df.shape
+```
+se observa en la salida anterior que el marco de datos `df` tiene  `r py$nfil` filas y `r py$ncol` columnas. Como se estudió en la sección \@ref(sec:tuplas) podemos guardar esa información en variables de Python para su uso en alguna rutina, mediante `nfil,ncol = df.shape`    
+
+#### Selección y adición de columnas.
+
+Para seleccionar una columna, cuyo nombre es `x`, en un  `Pandas DataFrame`, procedemos de la siguiente forma: `df['x']` o también mediante `df.x`. Seleccionamos `col1` del marco de datos `df`  
+```{python}
+df['col1'] 
+```
+observe que la clase del objeto recuperado es una serie de Pandas. 
+```{python}
+type(df['col1'])
+```
+Otra forma de conseguir lo mismo es mediante  
+```{python eval=FALSE }
+df.col1 
+```
+A continuación se crea la columna `rcol2` calculando la raíz cuadrada positiva de la columna `col2`, es decir, se aplica la transformación $y=\sqrt x$, luego se agrega al  `DataFrame` `df`, de tal forma que este queda con tres columnas  
+```{python}
+df['rcol2']=np.sqrt(df["col2"])
+df.head(3)
+``` 
+note que ahora `df` tiene tres columnas. Equivalente a la línea de código anterior es 
+```{python   eval=FALSE  }
+df['rcol1']=np.sqrt(df.col2)  
+```
+Seguidamente se crea la columna `sum_col` como la suma de las columnas `col1` y `col2` 
+```{python}
+df['sum_col']=df.col1 + df.col2 
+# equivalente a df['sum_col']=df["col1"]+df["col2"]
+df.head(3) 
+```
+
+Si necesita extraer más de una columna al tiempo, por ejemplo extraer del `DataFrame` `df` las columnas de nombre `x1` y `x2` se usa la sintaxis `df[['x1','x2']]`, veamos un ejemplo 
+```{python}
+df[['sum_col','col1']].head(3) 
+```
+
+### Selección de filas y columnas con `iloc`
+
+El método `iloc` selecciona tanto filas como columnas de un marco de datos de Pandas, basado en la posición del elemento (fila o columna). La sintaxis es de la forma `df.iloc[<fila>,<columna>]` donde `df` es un `DataFrame` de Pandas, `fila` un número entero o una lista de enteros indicando la posición (índice) de las filas a seleccionar. Análogamente para `columna`. Cuando se entrega un solo valor, por ejemplo `df.iloc[valor]` la selección se hace sobre las filas, veamos su funcionamiento con ejemplos concretos 
+
+```{python}
+# selecciona las primeras 3 filas 
+df.iloc[0:3] 
+# selecciona la primera fila del data
+df.iloc[0] # equivalente a df.iloc[0,] 
+# La segunda fila del data 
+df.iloc[1] 
+### filas con índices específicos 
+df.iloc[[0,4,6]]
+# selecciona la última fila del data
+df.iloc[-1] 
+```
+note que en la última línea se ha usado un índice negativo, lo que indica selección desde la última fila. Para seleccionar  columnas se procede de forma análoga
+```{python}
+# Las dos primeras columnas con todas las filas 
+df.iloc[:,0:2]
+# filas y columnas con  índices específicas 
+df.iloc[[0,3,6], [0,2]] 
+```
+También se pueden seleccionar filas (o columnas) usando valores lógicos,  serán seleccionadas las filas (o columnas)  que les corresponda un `True`, como hemos visto con las series, esta forma de seleccionar es muy útil, pues permite filtrar los datos por el cumplimiento de ciertas condiciones que sean de interés. 
+```{python}
+# selecciona las columnas que les corresponda True
+df.iloc[:,[False,True,False,True,False]]
+```
+a continuación seleccionamos las filas de `df` que cumplan con la condición que `col2` sea mayor o igual que 7    
+```{python}
+df.iloc[list(df.col2>=7)] 
+```
+Seleccionemos del marco de datos `df` aquellas filas que cumplan con la condición que `col3` sea igual a "F" 
+```{python}
+df.iloc[list(df.col3=="F")]  
+```
+Un último ejemplo, seleccionemos del marco de datos  `df` las filas que correspondan a indice par.  
+```{python}
+df.iloc[df.index % 2 == 0]  
+```
+
+### Selección de filas y columnas con `loc`  
+Con el método `loc` se puede acceder a un grupo de filas o columnas de la tabla de datos mediante etiquetas o un arreglo cuyos elementos son valores lógicos.  
+En el siguiente ejemplo se seleccionan aquellas filas para las cuales se verifica que los valores de `col1` son mayores que 4
+```{python}
+df.loc[df.col1>4] 
+```
+Selección de las filas de  `df` que cumplan simultáneamente las  condiciones `col1>4` y `col2<=3`  
+```{python}
+df.loc[(df.col1>=4) & (df.col2<=3)]  
+```
+
+
+```{r echo=FALSE}
+#knitr::kable(py$dataf)
+```
+### Unir marcos de datos de Pandas
+
+En caso que se tengan dos tablas de datos con exactamente las mismas columnas, lo cual podría darse, por ejemplo, cuando tienes información de hombres y la misma información para mujeres pero separadas, en distintas tablas, podríamos unir las dos tablas con `append`. Para ilustrar el uso de `append` crearemos dos marcos de datos, `dfM` y `dfF` que contienen datos de edad, estatura, y género, note que la información está separada por esta última variable  
+```{python}
+dfM=pd.DataFrame({"Edad":[24,21,18,26],
+     "Estat":[1.65,1.72,1.69,1.8],
+     "Genero":["M","M","M","M"]})
+dfF=pd.DataFrame({"Edad":[23,22,19,25,21],
+     "Estat":[1.60,1.58,1.62,1.71,1.64],
+     "Genero":["F","F","F","F","F"]})
+```
+Usemos el método `.append()` para unir los dos marcos de datos en uno 
+```{python}
+df1=dfM.append(dfF)
+df1
+```
+note en la salida anterior que los índices de filas son los mismos de los marcos de datos originales, esto puede causar confusión al momento de seleccionar filas usando indices, para evitar ese comportamiento usamos la opción  `ignore_index=True`    
+```{python}
+df1=dfM.append(dfF,ignore_index=True)
+df1 
+```
+Otra forma de unir dos marcos de datos de Pandas en mediante  la función `concat()`, veamos como se hace 
+```{python}
+tablas=[dfM,dfF] 
+df1=pd.concat(tablas,ignore_index=False) 
+df1
+```
+es posible asignar claves a cada bloque representado por los niveles de género, para que, en caso que sea necesario, se facilite la posterior separación
+```{python}
+dfC=pd.concat(tablas,keys=['Masculino', 'Femenino']) 
+dfC
+```
+De ese modo, si queremos recuperar el grupo femenino podríamos hacerlo de la siguiente forma.
+```{python}
+dfC.loc['Femenino']
+```
+cuando los marcos de datos que queremos concatenar tienen algunas columnas que no son comunes,  `concat()` hace coincidir las columnas comunes y las no comunes las adiciona a la tabla y llena las filas que quedan sin datos con `NaN`, veamos un ejemplo
+```{python}
+df1 = pd.DataFrame({'A': ['A0', 'A1', 'A2', 'A3'],
+                    'B': ['B0', 'B1', 'B2', 'B3'],
+                    'C': ['C0', 'C1', 'C2', 'C3'],
+                    'D': ['D0', 'D1', 'D2', 'D3']},
+                       index=[0, 1, 2, 3])
+df1
+df2 = pd.DataFrame({'B': ['B2', 'B3', 'B6', 'B7'],
+                    'D': ['D2', 'D3', 'D6', 'D7'],
+                    'F': ['F2', 'F3', 'F6', 'F7']},
+                         index=[2, 3, 6, 7])
+df2
+```
+note que `df1` y `df2` tienen dos columnas y dos filas en común: `B` ,  `D` y  `2`, `3` respectivamente, ahora concatenamos 
+```{python}
+dfC12=pd.concat([df1,df2])   
+dfC12
+```
+note que se hacen coincidir las columnas cuidando que la información de las filas con el mismo indice se mantenga. Con la opción `join="inner"` solo se concatenan las columnas que sean comunes a los dos marcos de datos 
+```{python}
+dfC12=pd.concat([df1,df2],join="inner")   
+dfC12
+```
+La opción `axis=1` es para concatenar por filas, es decir coloca un marco de datos al lado del otro, haciendo coincidir las filas con el mismo índice 
+```{python}
+dfC12=pd.concat([df1,df2],axis=1) 
+dfC12
+```
+De manera análoga que con las columnas, con la opción `join="inner"` solo se conservan  las filas que sean comunes a los dos marcos de datos,   
+```{python}
+dfC12=pd.concat([df1,df2],axis=1,join="inner") 
+dfC12
+```
+
+### Ordenar un marco de datos 
+
+Para ordenar un `DataFrame` de Pandas  se cuenta con el método `sort_values`, en los siguientes ejemplos se usa el marco de datos `df`, al cual le adicionamos otra columna de nombre `col3`
+```{python}
+df["col3"]=np.array([1,2,3,4,1,2,3])   
+dfor=df.sort_values(by=['col1']) # ordenamos df por col1 
+dfor # datos ordenados 
+```
+ahora ordenamos `df` primero por `col3` y luego por `col1`
+```{python}
+df["col3"]=np.array([1,2,3,4,1,2,3])   
+dfor=df.sort_values(by=['col3','col1'])  
+dfor # datos ordenados 
+```
+
+### Convertir una columna numérica a un factor 
+
+En el análisis de datos es frecuente el caso donde se requiera convertir una variable que inicialmente se registra como numérica a una variable categórica o `factor`. La variable `col3` del marco `df` es numérica y queremos convertirla en un factor, veamos como se hace
+```{python}
+# primero se hace una copia de col3 para conservarla como numérica
+df["col3f"]=df["col3"] 
+rep=rep={1:"c1",2:"c2",3:"c3",4:"c4"} # un diccionario 
+df["col3f"]=df["col3"].replace(rep)   
+#df
+df.info()
+```
+observe que el tipo de dato que contiene `col3f` es `object`, es decir, cadena de texto  o  `string`. Para hacer la conversión a una variable categórica se usa el método `astype` 
+```{python}
+df["col3f"]=df.col3f.astype('category')
+df.info()
+```
+
+Una situación que se presenta con frecuencia en el análisis de datos es categorizar una variable cuantitativa, por lo general de naturaleza continua. Por ejemplo, tenemos los siguientes datos que se muestran en la tabla \@ref(tab:datosedades)  corresponden a edades de personas 
+
+```{r echo=FALSE}
+set.seed(123)
+x=c(runif(10,min=14,max=26),runif(10,min=27,max=40),runif(10,min=41,max=50),runif(20,min=51,max=80)) 
+```
+
+```{r datosedades, echo=FALSE}  
+knitr::kable(matrix(sample(round(x),50),5,10),booktabs = TRUE, caption = 'Datos de edades de un grupo de personas')
+```
+
+Usaremos los siguientes grupos etarios según la OMS: juventud [14 - 26 años], adultez joven (26 - 40 años] adultez intermedia (40 - 50 años] adultez tardía (50 - 60 años] y adulto mayor  (60  años o más )
+
+```{python}
+edad=pd.Series([20, 74, 36, 49, 39, 47, 60, 63, 34, 50,
+46, 44, 28, 28, 39, 65, 52, 65, 55, 73,
+77, 25, 71, 47, 15, 76, 23, 19, 58, 62,
+57, 25, 59, 46, 39, 42, 25, 21, 19, 55,
+47, 33, 55, 79, 63, 30, 58, 31, 17, 47] )
+edadf=pd.cut(edad, bins=[14,26,40,50,60,float('Inf')],
+labels= ['Juventud','Adultez joven',
+'Adultez intermedia','adultez tardía','Adulto Mayor']) 
+dfedad=pd.DataFrame({"Edad":edad,"Categ":edadf})
+dfedad.head()
+```
+ahora podemos contar cuantas personas hay en cada grupo etáreo usando el método `count()`    
+```{python}
+edadf.value_counts() 
+```
+estos métodos para contar, sumar, promediar, en general, para calcular estadísticas de resumen los estudiaremos en el capítulo ... 
+
+### Ejercicios  

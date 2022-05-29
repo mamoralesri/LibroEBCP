@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapítulo3 Estadística descriptiva con Python | Python para estadística</title>
+  <meta name="description" content="<p>Notas de clase que pronto serán un libro.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapítulo3 Estadística descriptiva con Python | Python para estadística" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="<p>Notas de clase que pronto serán un libro.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapítulo3 Estadística descriptiva con Python | Python para estadística" />
+  
+  <meta name="twitter:description" content="<p>Notas de clase que pronto serán un libro.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+  
+
+<meta name="author" content="Mario Alfonso Morales Rivera" />
+
+
+<meta name="date" content="2022-05-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="contenedores-de-datos-en-python.html"/>
+<link rel="next" href="parts.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#por-qué-python"><i class="fa fa-check"></i><b>1.1</b> ¿Por qué Python?</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#instalación-de-python"><i class="fa fa-check"></i><b>1.2</b> Instalación de Python</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#ejecución-de-código-python"><i class="fa fa-check"></i><b>1.2.1</b> Ejecución de código Python</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html"><i class="fa fa-check"></i><b>2</b> Contenedores de datos en Python</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#sec:tuplas"><i class="fa fa-check"></i><b>2.1</b> Tuplas</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#creación."><i class="fa fa-check"></i><b>2.1.1</b> Creación.</a></li>
+<li class="chapter" data-level="2.1.2" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#indexado-de-tuplas."><i class="fa fa-check"></i><b>2.1.2</b> Indexado de tuplas.</a></li>
+<li class="chapter" data-level="2.1.3" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#sec:funcionesAplicablesATuplas"><i class="fa fa-check"></i><b>2.1.3</b> Funciones y métodos aplicables a tuplas</a></li>
+<li class="chapter" data-level="2.1.4" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#operaciones-con-tuplas."><i class="fa fa-check"></i><b>2.1.4</b> Operaciones con tuplas.</a></li>
+<li class="chapter" data-level="2.1.5" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#iterar-sobre-una-tupla."><i class="fa fa-check"></i><b>2.1.5</b> Iterar sobre una tupla.</a></li>
+<li class="chapter" data-level="2.1.6" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#ejemplo-de-aplicación."><i class="fa fa-check"></i><b>2.1.6</b> Ejemplo de aplicación.</a></li>
+<li class="chapter" data-level="2.1.7" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#cómo-saber-si-un-objeto-de-python-es-una-tupla"><i class="fa fa-check"></i><b>2.1.7</b> ¿Cómo saber si un objeto de Python es una tupla?</a></li>
+<li class="chapter" data-level="2.1.8" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#ejercicios"><i class="fa fa-check"></i><b>2.1.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#sec:listas"><i class="fa fa-check"></i><b>2.2</b> Listas</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#creación"><i class="fa fa-check"></i><b>2.2.1</b> Creación</a></li>
+<li class="chapter" data-level="2.2.2" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#IndexadoDeListas"><i class="fa fa-check"></i><b>2.2.2</b> Indexado de listas</a></li>
+<li class="chapter" data-level="2.2.3" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#inserción-adición-y-borrado-de-elementos-en-una-lista"><i class="fa fa-check"></i><b>2.2.3</b> Inserción, adición y borrado de elementos en una lista</a></li>
+<li class="chapter" data-level="2.2.4" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#longitud-de-la-lista."><i class="fa fa-check"></i><b>2.2.4</b> Longitud de la lista.</a></li>
+<li class="chapter" data-level="2.2.5" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#indexación-de-listas"><i class="fa fa-check"></i><b>2.2.5</b> Indexación de listas</a></li>
+<li class="chapter" data-level="2.2.6" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#otras-formas-de-crear-listas"><i class="fa fa-check"></i><b>2.2.6</b> Otras formas de crear listas</a></li>
+<li class="chapter" data-level="2.2.7" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#listas-anidadas."><i class="fa fa-check"></i><b>2.2.7</b> Listas anidadas.</a></li>
+<li class="chapter" data-level="2.2.8" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#ordenar-una-lista."><i class="fa fa-check"></i><b>2.2.8</b> Ordenar una lista.</a></li>
+<li class="chapter" data-level="2.2.9" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#ejercicios-1"><i class="fa fa-check"></i><b>2.2.9</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#sec:arreglos"><i class="fa fa-check"></i><b>2.3</b> Arreglos</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#creación-de-arreglos"><i class="fa fa-check"></i><b>2.3.1</b> Creación de arreglos</a></li>
+<li class="chapter" data-level="2.3.2" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#arreglos-especiales"><i class="fa fa-check"></i><b>2.3.2</b> Arreglos especiales</a></li>
+<li class="chapter" data-level="2.3.3" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#matrices-especiales"><i class="fa fa-check"></i><b>2.3.3</b> Matrices especiales</a></li>
+<li class="chapter" data-level="2.3.4" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#tipos-de-datos-en-los-arreglos"><i class="fa fa-check"></i><b>2.3.4</b> Tipos de datos en los arreglos</a></li>
+<li class="chapter" data-level="2.3.5" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#indexación-en-arreglos-de-numpy"><i class="fa fa-check"></i><b>2.3.5</b> Indexación en arreglos de NumPy</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#diccionarios"><i class="fa fa-check"></i><b>2.4</b> Diccionarios</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#creación-de-diccionarios"><i class="fa fa-check"></i><b>2.4.1</b> Creación de diccionarios</a></li>
+<li class="chapter" data-level="2.4.2" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#acceso-a-claves-y-valores-de-un-diccionario"><i class="fa fa-check"></i><b>2.4.2</b> Acceso a claves y valores de un diccionario</a></li>
+<li class="chapter" data-level="2.4.3" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#otros-métodos-aplicables-a-diccionarios"><i class="fa fa-check"></i><b>2.4.3</b> Otros métodos aplicables a diccionarios</a></li>
+<li class="chapter" data-level="2.4.4" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#ejercicios-2"><i class="fa fa-check"></i><b>2.4.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#series-y-marcos-de-datos-data-frames"><i class="fa fa-check"></i><b>2.5</b> Series y marcos de datos (<strong>data frames</strong>)</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#series-de-pandas"><i class="fa fa-check"></i><b>2.5.1</b> Series de Pandas</a></li>
+<li class="chapter" data-level="2.5.2" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#marcos-de-datos-de-pandas"><i class="fa fa-check"></i><b>2.5.2</b> Marcos de datos de Pandas</a></li>
+<li class="chapter" data-level="2.5.3" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#selección-de-filas-y-columnas-con-iloc"><i class="fa fa-check"></i><b>2.5.3</b> Selección de filas y columnas con <code>iloc</code></a></li>
+<li class="chapter" data-level="2.5.4" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#selección-de-filas-y-columnas-con-loc"><i class="fa fa-check"></i><b>2.5.4</b> Selección de filas y columnas con <code>loc</code></a></li>
+<li class="chapter" data-level="2.5.5" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#unir-marcos-de-datos-de-pandas"><i class="fa fa-check"></i><b>2.5.5</b> Unir marcos de datos de Pandas</a></li>
+<li class="chapter" data-level="2.5.6" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#ordenar-un-marco-de-datos"><i class="fa fa-check"></i><b>2.5.6</b> Ordenar un marco de datos</a></li>
+<li class="chapter" data-level="2.5.7" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#convertir-una-columna-numérica-a-un-factor"><i class="fa fa-check"></i><b>2.5.7</b> Convertir una columna numérica a un factor</a></li>
+<li class="chapter" data-level="2.5.8" data-path="contenedores-de-datos-en-python.html"><a href="contenedores-de-datos-en-python.html#ejercicios-3"><i class="fa fa-check"></i><b>2.5.8</b> Ejercicios</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Descriptiva.html"><a href="Descriptiva.html"><i class="fa fa-check"></i><b>3</b> Estadística descriptiva con Python</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Descriptiva.html"><a href="Descriptiva.html#medidas-de-tendencia-central"><i class="fa fa-check"></i><b>3.1</b> Medidas de tendencia central</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Descriptiva.html"><a href="Descriptiva.html#media-aritmética"><i class="fa fa-check"></i><b>3.1.1</b> Media aritmética</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Descriptiva.html"><a href="Descriptiva.html#mediana"><i class="fa fa-check"></i><b>3.1.2</b> Mediana</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Descriptiva.html"><a href="Descriptiva.html#medidas-de-dipersión"><i class="fa fa-check"></i><b>3.2</b> Medidas de dipersión</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Descriptiva.html"><a href="Descriptiva.html#rango"><i class="fa fa-check"></i><b>3.2.1</b> Rango</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Descriptiva.html"><a href="Descriptiva.html#varianza-y-desviación-estándar"><i class="fa fa-check"></i><b>3.2.2</b> Varianza y desviación estándar</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Descriptiva.html"><a href="Descriptiva.html#cuantiles"><i class="fa fa-check"></i><b>3.2.3</b> Cuantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Descriptiva.html"><a href="Descriptiva.html#gráficos"><i class="fa fa-check"></i><b>3.3</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="Descriptiva.html"><a href="Descriptiva.html#graficos-para-datos-categóricos"><i class="fa fa-check"></i><b>3.3.1</b> Graficos para datos categóricos</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Descriptiva.html"><a href="Descriptiva.html#gráfico-para-datos-cuantitativos"><i class="fa fa-check"></i><b>3.3.2</b> Gráfico para datos cuantitativos</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="Descriptiva.html"><a href="Descriptiva.html#ejercicios-4"><i class="fa fa-check"></i><b>3.4</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="parts.html"><a href="parts.html"><i class="fa fa-check"></i><b>4</b> Parts</a></li>
+<li class="chapter" data-level="5" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html"><i class="fa fa-check"></i><b>5</b> Footnotes and citations</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#footnotes"><i class="fa fa-check"></i><b>5.1</b> Footnotes</a></li>
+<li class="chapter" data-level="5.2" data-path="footnotes-and-citations.html"><a href="footnotes-and-citations.html#citations"><i class="fa fa-check"></i><b>5.2</b> Citations</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>6</b> Blocks</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
+<li class="chapter" data-level="6.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>6.2</b> Theorems and proofs</a></li>
+<li class="chapter" data-level="6.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>6.3</b> Callout blocks</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>7</b> Sharing your book</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>7.1</b> Publishing</a></li>
+<li class="chapter" data-level="7.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>7.2</b> 404 pages</a></li>
+<li class="chapter" data-level="7.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>7.3</b> Metadata for sharing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Python para estadística</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Descriptiva" class="section level1" number="3">
+<h1><span class="header-section-number">Chapítulo3</span> Estadística descriptiva con Python</h1>
+<p>En la primera parte de este capítulo haremos una revisión de medidas de tendencia central (media, mediana) y dispersión (rango, varianza, desviación estándar, coeficiente de variación y rango intercuartílico) además de las funciones y métodos que tenemos para su cálculo usando Python. En la segunda parte estudiaremos algunas opciones gráficas para el análisis exploratorio de datos: gráfico de barras, circulares, histograma, gráficos de dispersión, boxplot entre otros.</p>
+<div id="medidas-de-tendencia-central" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Medidas de tendencia central</h2>
+<div id="media-aritmética" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Media aritmética</h3>
+<p>La media aritmética de un conjunto de <span class="math inline">\(n\)</span> observaciones
+<span class="math inline">\(y_{1},y_{2},y_{3},\ldots , y_{n}\)</span> se define como la suma de las
+observaciones dividida entre <span class="math inline">\(n\)</span> (el número de datos). Se indica
+con <span class="math inline">\(\overline{y}\)</span>
+<span class="math display" id="eq:mediamuestral">\[\begin{equation}
+\overline{y}=\frac{\sum\limits_{i=1}^{n}y_{i}}{n}=\frac{y_{1}+y_{2}%
++y_{3}+\cdots+y_{n}}{n} \tag{3.1}
+\end{equation}\]</span></p>
+<div class="example">
+<p><span id="exm:mediamuestral" class="example"><strong>Example 3.1  (Media aritmética) </strong></span>Considere las 15 mediciones que se muestran en la tabla <a href="Descriptiva.html#tab:ejemplomedia">3.1</a>, calcule la media aritmética.</p>
+<table>
+<caption><span id="tab:ejemplomedia">Table 3.1: </span>Datos para el ejemplo <a href="Descriptiva.html#exm:mediamuestral">3.1</a></caption>
+<tbody>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">7</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
+<p>Tenemos <span class="math inline">\(n=15\)</span> datos cuya suma es <span class="math inline">\(\sum y_i = 102\)</span> por lo tanto, la media aritmética es <span class="math inline">\(\overline{y}=\frac{ 102 }{ 15 } =6.8\)</span></p>
+<p>Calcularemos de dos formas: primero ingresando los datos como un arreglo de <code>NumPy</code> y usando el método <code>.mean()</code> y luego usando las series de Pandas</p>
+<div class="sourceCode" id="cb409"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb409-1"><a href="Descriptiva.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb409-2"><a href="Descriptiva.html#cb409-2" aria-hidden="true" tabindex="-1"></a>datosn<span class="op">=</span>np.array([<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">11</span>,<span class="dv">7</span>]) </span>
+<span id="cb409-3"><a href="Descriptiva.html#cb409-3" aria-hidden="true" tabindex="-1"></a>datosn.mean()</span></code></pre></div>
+<pre><code>## 6.8</code></pre>
+<p>Usando el método <code>.mean()</code> pero definido sobre lops objetos de tipo <em>Series</em> de <strong>Pandas</strong> sería</p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb411-1"><a href="Descriptiva.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb411-2"><a href="Descriptiva.html#cb411-2" aria-hidden="true" tabindex="-1"></a>datosp<span class="op">=</span>pd.Series([<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">11</span>,<span class="dv">7</span>]) </span>
+<span id="cb411-3"><a href="Descriptiva.html#cb411-3" aria-hidden="true" tabindex="-1"></a>datosp.mean()</span></code></pre></div>
+<pre><code>## 6.8</code></pre>
+<p>Si quiere obtener la suma de los datos puede hacerlo, tanto con arreglos de NumPy como con Series de pandas, con el método <code>.sum()</code></p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb413-1"><a href="Descriptiva.html#cb413-1" aria-hidden="true" tabindex="-1"></a>datosn.<span class="bu">sum</span>()</span>
+<span id="cb413-2"><a href="Descriptiva.html#cb413-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(datosn)</span>
+<span id="cb413-3"><a href="Descriptiva.html#cb413-3" aria-hidden="true" tabindex="-1"></a>datosp.<span class="bu">sum</span>()</span>
+<span id="cb413-4"><a href="Descriptiva.html#cb413-4" aria-hidden="true" tabindex="-1"></a>datosp.count()</span></code></pre></div>
+<p>mientas que el número de datos se obtiene con la función <code>len()</code> en el caso de arreglos de NumPy y con el método <code>.count()</code> en el caso de Series de Pandas</p>
+<div class="sourceCode" id="cb414"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb414-1"><a href="Descriptiva.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(datosn)</span>
+<span id="cb414-2"><a href="Descriptiva.html#cb414-2" aria-hidden="true" tabindex="-1"></a>datosp.count()</span></code></pre></div>
+<p>de tal manera que otra forma de calcular la media seria</p>
+<div class="sourceCode" id="cb415"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb415-1"><a href="Descriptiva.html#cb415-1" aria-hidden="true" tabindex="-1"></a>datosn.<span class="bu">sum</span>()<span class="op">/</span><span class="bu">len</span>(datosn)</span>
+<span id="cb415-2"><a href="Descriptiva.html#cb415-2" aria-hidden="true" tabindex="-1"></a>datosp.<span class="bu">sum</span>()<span class="op">/</span>datosp.count()</span></code></pre></div>
+</div>
+<div id="cálculo-de-la-media-aritmética-cuando-hay-datos-faltantes" class="section level4" number="3.1.1.1">
+<h4><span class="header-section-number">3.1.1.1</span> Cálculo de la media aritmética cuando hay datos faltantes</h4>
+<p>Las dos opciones anteriores para calcular la media usando <em>Pandas</em> o usando <em>Numpy</em> son equivalentes, sin embargo, en presencia de datos faltantes hay diferencias que es necesario considerar. A continuación se ilustran con ejemplos esas diferencias, el arreglo <code>anp</code> y la Serie <code>apd</code> creados a continuación tienen los mismos datos con uno faltante, calculemos la media</p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb416-1"><a href="Descriptiva.html#cb416-1" aria-hidden="true" tabindex="-1"></a>anp<span class="op">=</span>np.array([<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,np.nan])</span>
+<span id="cb416-2"><a href="Descriptiva.html#cb416-2" aria-hidden="true" tabindex="-1"></a>anp.mean()</span></code></pre></div>
+<pre><code>## nan</code></pre>
+<div class="sourceCode" id="cb418"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb418-1"><a href="Descriptiva.html#cb418-1" aria-hidden="true" tabindex="-1"></a>apd<span class="op">=</span>pd.Series([<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,np.nan])</span>
+<span id="cb418-2"><a href="Descriptiva.html#cb418-2" aria-hidden="true" tabindex="-1"></a>apd.mean()</span></code></pre></div>
+<pre><code>## 3.0</code></pre>
+<p>observe que el método <code>.mean()</code> definido sobre arreglos de NumPy regresa <code>nan</code>, mientras que <code>.mean()</code> de Pandas calcula la media de los datos disponibles. Hay dos formas de calcular la media cuando los datos están en un arreglo de NumPy en presencia de datos faltantes: una es usando el método <code>.nanmean()</code>; la otra es creando un nuevo arreglo a partir del arreglo original, quitando los datos faltantes y luego usar el método <code>.mean()</code></p>
+<div class="sourceCode" id="cb420"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb420-1"><a href="Descriptiva.html#cb420-1" aria-hidden="true" tabindex="-1"></a>anp<span class="op">=</span>np.array([<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,np.nan])</span>
+<span id="cb420-2"><a href="Descriptiva.html#cb420-2" aria-hidden="true" tabindex="-1"></a>np.nanmean(anp)</span></code></pre></div>
+<pre><code>## 3.0</code></pre>
+<p>ahora obtenemos un nuevo arreglo quitando los datos faltantes y luego se usa el método <code>.mean()</code></p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb422-1"><a href="Descriptiva.html#cb422-1" aria-hidden="true" tabindex="-1"></a>anp<span class="op">=</span>np.array([<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,np.nan])</span>
+<span id="cb422-2"><a href="Descriptiva.html#cb422-2" aria-hidden="true" tabindex="-1"></a>anp[<span class="op">~</span>np.isnan(anp)].mean()</span></code></pre></div>
+<pre><code>## 3.0</code></pre>
+<p>en el bloque de código anterior se ha usado la función <code>isnan()</code> que regresa un arreglo de valores lógicos, con <code>True</code> en las posiciones donde se encuentre un dato faltante y <code>False</code> en caso contrario. Observe que el resultado de <code>isnan()</code> está negado (precedido de <code>~</code>), por lo tanto, en la última línea se están seleccionando, mediante indexación booleana (véase la sección <a href="contenedores-de-datos-en-python.html#IndexacionBooleana">2.3.5.3.2</a>), las entradas del arreglo <code>anp</code> donde hay datos, luego se calcula la media con el método <code>.mean()</code>.</p>
+<div class="example">
+<p><span id="exm:mediaponderada" class="example"><strong>Example 3.2  (Media ponderada) </strong></span>Un comerciante ganadero necesita reunir un lote de 50 reces de año y medio de edad, para lo cual visita las diferentes subastas ganaderas de su región y compra, en la primera subasta 15 reces con un peso promedio de 120 kg, en la segunda un lote de 25 reces con un peso promedio 112 kg y por ultimo en la tercera subasta compra el último lote de 10 animales cuyo peso promedio es 125 kg. El comerciante debe reportar a la gerencia de su empresa el peso promedio del lote completo ¿cuál es el peso promedio del lote de 50 animales adquiridos?</p>
+<p>El peso promedio de los 50 animales es el peso total dividida por 50. A partir de la ecuación <a href="Descriptiva.html#eq:mediamuestral">(3.1)</a> es claro que <span class="math inline">\(n\overline y = \sum_{i=i}^ny_i\)</span>, así que si multiplicamos el número de animales de cada lote por su peso promedio, obtenemos la suma de los pesos y sumando estas sumas obtenemos el peso total del lote de 50 animales, dividimos este total por el número de animales <span class="math inline">\(15+25+10\)</span> obtenemos el peso promedio del lote de 50 animales, así
+<span class="math display" id="eq:mediaponderadaejemplo">\[\begin{align}
+\overline{y}=&amp;\frac{n_1\overline{y}_1 + n_2\overline{y}_2 + n_3\overline{y}_3}{n_1+n_2+n_3} = \frac{15\times 120  + 25\times 112 + 10\times 125}{15+25+10  } \notag \\
+= &amp;  \frac{1800  + 2800 + 1250}{50  }=\frac{5850}{50  } \notag \\
+=&amp;117     \tag{3.2}
+\end{align}\]</span>
+note que no se trata de promediar los tres promedios, cuyo resultado seria 119.</p>
+</div>
+<p>El cálculo hecho anteriormente se conoce como un promedio ponderado. El promedio ponderado tiene en cuenta los diversos grados de importancia de los números en un conjunto de datos. Al calcular un promedio ponderado, cada número en el conjunto de datos <span class="math inline">\(y_i\)</span> se multiplica por un peso predeterminado <span class="math inline">\(w_i\)</span></p>
+<p><span class="math display" id="eq:mediaponderada">\[\begin{equation}
+\overline{y}_w=\frac{\sum\limits_{i=1}^{n}w_iy_{i}}{\sum\limits_{i=1}^{n}w_i} \tag{3.3}
+\end{equation}\]</span>
+En el ejemplo <a href="Descriptiva.html#exm:mediaponderada">3.2</a> las ponderaciones son los tamaños de los lotes.</p>
+<p>Para el cálculo de la media ponderada con Python, se cuenta en el paquete NumPy con la función <code>average()</code></p>
+<div class="sourceCode" id="cb424"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb424-1"><a href="Descriptiva.html#cb424-1" aria-hidden="true" tabindex="-1"></a>yi<span class="op">=</span>np.array([<span class="dv">120</span>,<span class="dv">112</span>,<span class="dv">125</span>])</span>
+<span id="cb424-2"><a href="Descriptiva.html#cb424-2" aria-hidden="true" tabindex="-1"></a>wi<span class="op">=</span>np.array([<span class="dv">15</span>,<span class="dv">25</span>,<span class="dv">10</span>])</span>
+<span id="cb424-3"><a href="Descriptiva.html#cb424-3" aria-hidden="true" tabindex="-1"></a>np.average(yi,weights<span class="op">=</span>wi) </span></code></pre></div>
+<pre><code>## 117.0</code></pre>
+<p>En Pandas no se cuenta con una función o método que calcule medias ponderadas, pero no es difícil implementar la fórmula</p>
+<div class="sourceCode" id="cb426"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb426-1"><a href="Descriptiva.html#cb426-1" aria-hidden="true" tabindex="-1"></a>yi<span class="op">=</span>pd.Series([<span class="dv">120</span>,<span class="dv">112</span>,<span class="dv">125</span>])</span>
+<span id="cb426-2"><a href="Descriptiva.html#cb426-2" aria-hidden="true" tabindex="-1"></a>wi<span class="op">=</span>pd.Series([<span class="dv">15</span>,<span class="dv">25</span>,<span class="dv">10</span>])</span>
+<span id="cb426-3"><a href="Descriptiva.html#cb426-3" aria-hidden="true" tabindex="-1"></a>(yi<span class="op">*</span>wi).<span class="bu">sum</span>()<span class="op">/</span>wi.<span class="bu">sum</span>() </span></code></pre></div>
+<pre><code>## 117.0</code></pre>
+<p>A continuación se define la función <code>mediaponderada()</code> que recibe los valores <span class="math inline">\(y_i\)</span> y los pesos <span class="math inline">\(w_i\)</span> como Series de Pandas y retorna la media ponderada.</p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb428-1"><a href="Descriptiva.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mediaponderada(y,w):</span>
+<span id="cb428-2"><a href="Descriptiva.html#cb428-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">type</span>(y) <span class="kw">is</span> pd.Series <span class="kw">and</span> <span class="bu">type</span>(w) <span class="kw">is</span> pd.Series:</span>
+<span id="cb428-3"><a href="Descriptiva.html#cb428-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (y<span class="op">*</span>w).<span class="bu">sum</span>()<span class="op">/</span>w.<span class="bu">sum</span>()</span>
+<span id="cb428-4"><a href="Descriptiva.html#cb428-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb428-5"><a href="Descriptiva.html#cb428-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Se requiere que w e y sean Series de Pandas&quot;</span>) </span></code></pre></div>
+</div>
+</div>
+<div id="mediana" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Mediana</h3>
+<p>La mediana de un conjunto de <span class="math inline">\(n\)</span> datos <span class="math inline">\(y_{1}, y_{2}, y_{3},\cdots, y_{n}\)</span> es un valor tal que la mitad (50%) de las observaciones son menores o iguales que él y la otra mitad es mayor o igual que dicho valor.</p>
+<p>Si <span class="math inline">\(y_{(1)}, y_{(2)}, \cdots, y_{(n)}\)</span> es el conjunto de valores ordenados de menor a mayor, es decir, acomodados en orden creciente de magnitud, la mediana se obtiene como la observación que ocupa el lugar <span class="math inline">\(\frac{n+1}{2}\)</span> en caso que <span class="math inline">\(n\)</span> sea impar, o el promedio de las observaciones que ocupan los lugares <span class="math inline">\(\frac{n}{2}\)</span> y <span class="math inline">\(\frac{n}{2}+1\)</span> si <span class="math inline">\(n\)</span> es un número par.</p>
+<p><span class="math display" id="eq:mediana">\[\begin{equation}
+M_e=\begin{cases}
+y_{\left(\frac{n+1}{2}\right)}&amp; \text{ si } n \text{ es impar}\\
+\frac{y_{\left(\frac{n}{2}\right)} +y_{\left(\frac{n}{2} +1\right)} }{2} &amp; \text{ si } n \text{ es
+par}
+\end{cases} \tag{3.4}  
+\end{equation}\]</span>
+de acuerdo con la definición anterior, el algoritmo para calcular la mediana sería:</p>
+<ul>
+<li>Ordene los datos de menor a mayor</li>
+<li>En caso que el número de datos sea impar, tome la observación central, es decir, la que ocupa el lugar <span class="math inline">\(\frac{n+1}{2}\)</span></li>
+<li>En caso que el número de datos sea impar, promedie las dos observaciones centrales, es decir, las que ocupan los lugares <span class="math inline">\(\frac{n}{2}\)</span> y <span class="math inline">\(\frac{n}{2}+1\)</span></li>
+</ul>
+<div class="example">
+<p><span id="exm:mediana" class="example"><strong>Example 3.3  (Mediana) </strong></span>Considere las 15 mediciones que se muestran en la tabla <a href="Descriptiva.html#tab:ejemplomedia">3.1</a>, calculemos su mediana.</p>
+<p>Los datos ordenados de menor a mayor se muestran en la tabla <a href="Descriptiva.html#tab:ejemplomediana">3.2</a></p>
+<table>
+<caption><span id="tab:ejemplomediana">Table 3.2: </span>Datos de la tabla <a href="Descriptiva.html#tab:ejemplomedia">3.1</a> ordenados de menor a mayor</caption>
+<tbody>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">7</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">10</td>
+<td align="right">11</td>
+</tr>
+</tbody>
+</table>
+<p>Tenemos un número impar de datos <span class="math inline">\((n=15)\)</span>, luego la mediana es el dato que está en la posición <span class="math inline">\(\frac{n+1}{2}=\frac{16}{2}=8\)</span> que corresponde a <span class="math inline">\(7\)</span>, este es el valor de la mediana de los datos.</p>
+<p>Análogo a como se hizo en el ejemplo <a href="Descriptiva.html#tab:ejemplomedia">3.1</a> calcularemos la mediana con NumPy usando el método <code>.median()</code></p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb429-1"><a href="Descriptiva.html#cb429-1" aria-hidden="true" tabindex="-1"></a>np.median(datosn)</span></code></pre></div>
+<pre><code>## 7.0</code></pre>
+<p>y con Pandas Usando el método <code>.median()</code> aplicable a Series, tenemos</p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb431-1"><a href="Descriptiva.html#cb431-1" aria-hidden="true" tabindex="-1"></a>datosp.median()</span></code></pre></div>
+<pre><code>## 7.0</code></pre>
+</div>
+<p>en caso de tener datos faltantes, el tratamiento es análogo a como se hizo con la media: si se tienen los datos en un arreglo de NumPy, contamos con la función <code>.nanmedian()</code></p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb433-1"><a href="Descriptiva.html#cb433-1" aria-hidden="true" tabindex="-1"></a>anp<span class="op">=</span>np.array([<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,np.nan])</span>
+<span id="cb433-2"><a href="Descriptiva.html#cb433-2" aria-hidden="true" tabindex="-1"></a>np.median(anp) <span class="co"># regresa nan </span></span>
+<span id="cb433-3"><a href="Descriptiva.html#cb433-3" aria-hidden="true" tabindex="-1"></a>np.nanmedian(anp) <span class="co"># mediana de los datos disponibles  </span></span></code></pre></div>
+<p>si los datos se tienen como una Serie de Pandas, el método <code>.median()</code> calcula la mediana con los datos disponibles</p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb434-1"><a href="Descriptiva.html#cb434-1" aria-hidden="true" tabindex="-1"></a>apd<span class="op">=</span>pd.Series([<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">1</span>,np.nan])</span>
+<span id="cb434-2"><a href="Descriptiva.html#cb434-2" aria-hidden="true" tabindex="-1"></a>apd.median() <span class="co"># mediana con los datos disponibles </span></span></code></pre></div>
+</div>
+</div>
+<div id="medidas-de-dipersión" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Medidas de dipersión</h2>
+<p>Cuando se describen datos no es suficiente con entregar medidas de tendencia central, para comprender la razón considere los siguientes datos</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">Muestra 1</td>
+<td align="right">130</td>
+<td align="right">150</td>
+<td align="right">145</td>
+<td align="right">158</td>
+<td align="right">165</td>
+<td align="right">140</td>
+</tr>
+<tr class="even">
+<td align="left">Muestra 2</td>
+<td align="right">90</td>
+<td align="right">128</td>
+<td align="right">205</td>
+<td align="right">140</td>
+<td align="right">165</td>
+<td align="right">160</td>
+</tr>
+</tbody>
+</table>
+<p>ingresemos los datos como una serie de pandas y calculemos su media</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb435-1"><a href="Descriptiva.html#cb435-1" aria-hidden="true" tabindex="-1"></a>m1<span class="op">=</span>pd.Series([<span class="dv">130</span>,<span class="dv">150</span>,<span class="dv">145</span>,<span class="dv">158</span>,<span class="dv">165</span>,<span class="dv">140</span>])</span>
+<span id="cb435-2"><a href="Descriptiva.html#cb435-2" aria-hidden="true" tabindex="-1"></a>m2<span class="op">=</span>pd.Series([<span class="dv">90</span>,<span class="dv">128</span>,<span class="dv">205</span>,<span class="dv">140</span>,<span class="dv">165</span>,<span class="dv">160</span>])</span>
+<span id="cb435-3"><a href="Descriptiva.html#cb435-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Medias: Muestra 1 %0.0f , Muestra 2 %0.0f&quot;</span> <span class="op">%</span>(m1.mean(),  </span>
+<span id="cb435-4"><a href="Descriptiva.html#cb435-4" aria-hidden="true" tabindex="-1"></a>m2.mean()))  </span></code></pre></div>
+<pre><code>## Medias: Muestra 1 148 , Muestra 2 148</code></pre>
+<p>Ambas muestras tienen media 148, es decir,
+<span class="math inline">\(\overline{y}_1=\overline{y}_2=148\)</span>.
+Sin embargo ¿Son similares los dos conjuntos de datos? Es claro que los datos de la muestra 1 son más <em>parecidos</em> entre ellos que los datos de la muestra 2. Formalmente, los datos de la muestra 2 son más heterogéneos, están más dispersos, o son más variables que los datos de muestra 1, sin embargo, la media es la misma. Así que además de las medidas de tendencia central, como la media o la mediana, se requieren medidas que den cuenta de la heterogeneidad, dispersión o variabilidad de los datos.</p>
+<div id="rango" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Rango</h3>
+<p>El Rango se define como la diferencia entre la observación más grande y la más pequeña.</p>
+<p><span class="math display" id="eq:rango">\[\begin{equation}
+R=\max(y_i)-\min(y_i) \tag{3.5}
+\end{equation}\]</span></p>
+<p>Para la muestra 1, el máximo es <span class="math inline">\(165\)</span> y el mínimo es <span class="math inline">\(130\)</span> así que su rango es <span class="math inline">\(R_1=165-130=35\)</span>; mientras que para la muestra 2 se tiene <span class="math inline">\(R_2=205-90=115\)</span>. Observe que <span class="math inline">\(R_2\)</span> es aproximadamente 3 veces <span class="math inline">\(R_1\)</span>, luego los datos de la muestra 2 están tres veces mas dispersos que los de la muestra 1. Calculemos el rango usando Pandas. Rango de la muestra 1</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb437-1"><a href="Descriptiva.html#cb437-1" aria-hidden="true" tabindex="-1"></a>m1.<span class="bu">max</span>()<span class="op">-</span>m1.<span class="bu">min</span>()</span></code></pre></div>
+<pre><code>## 35</code></pre>
+<p>Rango de la muestra 2</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb439-1"><a href="Descriptiva.html#cb439-1" aria-hidden="true" tabindex="-1"></a>m2.<span class="bu">max</span>()<span class="op">-</span>m2.<span class="bu">min</span>()</span></code></pre></div>
+<pre><code>## 115</code></pre>
+<p>Pandas no tiene una función que calcule el rango directamente pero no es difícil implementar una función</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb441-1"><a href="Descriptiva.html#cb441-1" aria-hidden="true" tabindex="-1"></a>rango <span class="op">=</span> <span class="kw">lambda</span> x: x.<span class="bu">max</span>() <span class="op">-</span> x.<span class="bu">min</span>()</span>
+<span id="cb441-2"><a href="Descriptiva.html#cb441-2" aria-hidden="true" tabindex="-1"></a>rango(m1)</span></code></pre></div>
+<pre><code>## 35</code></pre>
+<div class="sourceCode" id="cb443"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb443-1"><a href="Descriptiva.html#cb443-1" aria-hidden="true" tabindex="-1"></a>rango(m2)</span></code></pre></div>
+<pre><code>## 115</code></pre>
+<p>En el bloque de código anterior se ha creado lo que se conoce como una función <code>lambda</code>, que es como cualquier función de python, excepto que no tiene nombre al definirla (función anónima) y está contenida en una línea de código.</p>
+<div class="pytec">
+<p><strong>Funciones Lambda:</strong> son de la forma</p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb445-1"><a href="Descriptiva.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="kw">lambda</span> argumento(s) : expresión</span></code></pre></div>
+<p>las funciones <code>lambda</code> aceptan uno o mas argumentos pero sólo una expresión.</p>
+</div>
+<p>Consideremos los siguientes datos y en cada caso calculemos el rango.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">Datos 1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">8</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Datos 2</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">9</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb446"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb446-1"><a href="Descriptiva.html#cb446-1" aria-hidden="true" tabindex="-1"></a>d1<span class="op">=</span>pd.Series([<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">9</span>])</span>
+<span id="cb446-2"><a href="Descriptiva.html#cb446-2" aria-hidden="true" tabindex="-1"></a>d2<span class="op">=</span>pd.Series([<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">9</span>])</span>
+<span id="cb446-3"><a href="Descriptiva.html#cb446-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Rango 1=%0.0f, Rango 2=%0.0f&quot;</span><span class="op">%</span>(rango(d1),rango(d2)))  </span></code></pre></div>
+<pre><code>## Rango 1=8, Rango 2=8</code></pre>
+<p>observe que el rango es el mismo, sin embargo, todos los datos del conjunto 1 son distintos, mientras que en los datos 2 hay 3 iguales, luego es claro que los datos 2 son más homogéneos que los datos 1. Esa es una desventaja del rango como medida de variabilidad o dispersión: ignora la información que hay entre el máximo y el mínimo, no tiene en cuenta toda la información en los datos. Se requiere una medida de dispersión que no pierda información, que use todas las observaciones. La medida de dispersión por excelencia es la varianza o su raíz cuadrada que se conoce como desviación estándar.</p>
+</div>
+<div id="varianza-y-desviación-estándar" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Varianza y desviación estándar</h3>
+<p>Dado un conjunto de <span class="math inline">\(n\)</span> observaciones
+<span class="math inline">\(y_{1},y_{2},y_{3},\cdots, y_{n}\)</span> con media aritmética <span class="math inline">\(\overline{y}\)</span>, se define la varianza como
+<span class="math display" id="eq:varianza">\[\begin{equation}
+S^2=\frac{(y_{1} - \overline{y})^2+(y_{2} - \overline{y})^2+\cdots+ (y_{n} - \overline{y})^2}{n-1}= \frac{\sum\limits_{i=1}^{n}(y_{i} - \overline{y})^2}{n-1} \tag{3.6}
+\end{equation}\]</span></p>
+<p>Se define la desviación estándar, <span class="math inline">\(S\)</span>, como la raíz cuadrada positiva de la varianza.
+<span class="math display" id="eq:desviacionestandar">\[\begin{equation}
+S =\sqrt {S^{2}}  =\sqrt{\frac{\sum\limits_{i=1}^{n}\left(
+y_{i}-\overline{y}\right) ^{2}
+}{n-1}} \tag{3.7}
+\end{equation}\]</span></p>
+<div class="example">
+<p><span id="exm:varianza" class="example"><strong>Example 3.4  (Varianza y desviación estándar) </strong></span>Considere las 5 mediciones que se muestran en la tabla <a href="Descriptiva.html#tab:ejemplovarianza">3.3</a>, calculemos su varianza y desviación estándar.</p>
+<table>
+<caption><span id="tab:ejemplovarianza">Table 3.3: </span>Datos para cálculo de la varianza</caption>
+<tbody>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">8</td>
+<td align="right">4</td>
+<td align="right">7</td>
+<td align="right">6</td>
+</tr>
+</tbody>
+</table>
+<p>La media de los datos es 6, por tanto la varianza se calcula de la siguiente forma
+<span class="math display">\[\begin{align*}
+S^2&amp;=\frac{(5   -  6 )^2+(8   -  6)^2+(4   -  6 )^2+ (7   -  6 )^2+(6   -  6 )^2}{5-1}\\
+&amp;=\frac{(-1 )^2+(2 )^2+(-2 )^2+ (1 )^2+(0 )^2}{4} \\
+&amp;=\frac{1 +4 +4+ 1 + 0 }{4}
+\\
+&amp;=\frac{10 }{4}=2.5
+\end{align*}\]</span></p>
+<p>La desviación estándar es <span class="math display">\[S=\sqrt{S^2}=\sqrt{2.5}=1.5811388\]</span></p>
+<p>Realicemos los cálculos anteriores con Pandas y con NumPy</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb448-1"><a href="Descriptiva.html#cb448-1" aria-hidden="true" tabindex="-1"></a>datospd<span class="op">=</span>pd.Series([<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">6</span>])</span>
+<span id="cb448-2"><a href="Descriptiva.html#cb448-2" aria-hidden="true" tabindex="-1"></a>datospd.var()</span></code></pre></div>
+<pre><code>## 2.5</code></pre>
+<div class="sourceCode" id="cb450"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb450-1"><a href="Descriptiva.html#cb450-1" aria-hidden="true" tabindex="-1"></a>datospd.std()</span></code></pre></div>
+<pre><code>## 1.5811388300841898</code></pre>
+<p>Los mismos cálculos usando NumPy se efectúan de la siguiente manera</p>
+<div class="sourceCode" id="cb452"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb452-1"><a href="Descriptiva.html#cb452-1" aria-hidden="true" tabindex="-1"></a>datosnp<span class="op">=</span>np.array([<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">6</span>])</span>
+<span id="cb452-2"><a href="Descriptiva.html#cb452-2" aria-hidden="true" tabindex="-1"></a>datosnp.var(ddof<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## 2.5</code></pre>
+<div class="sourceCode" id="cb454"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb454-1"><a href="Descriptiva.html#cb454-1" aria-hidden="true" tabindex="-1"></a>datosnp.std(ddof<span class="op">=</span><span class="dv">1</span>) </span></code></pre></div>
+<pre><code>## 1.5811388300841898</code></pre>
+<p>Note el uso de la opción <code>ddof=1</code>, esto es obligatorio para que se calcule la varianza según la fórmula <a href="Descriptiva.html#eq:varianza">(3.6)</a> ya que la fórmula implementada en el método <code>.var()</code> de NumPy es<br />
+<span class="math display">\[\begin{equation*}
+\frac{\sum\limits_{i=1}^{n}\left(
+y_{i}-\overline{y}\right) ^{2}
+}{n-\text{ddof}}
+\end{equation*}\]</span>
+y el valor predeterminado es <code>ddof=0</code> , análogo para el método <code>.std()</code></p>
+</div>
+</div>
+<div id="cuantiles" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Cuantiles</h3>
+<p>Los cuantiles son medidas de localización, ellos nos indican el valor en los datos que ocupará la posición que nos interese respecto de todo el conjunto de datos. Podemos decir que los cuantiles son medidas de posición que dividen a la distribución de los datos en un cierto número de partes, de tal forma que en cada una de ellas hay el mismo número de datos. Los cuantiles más usados son: <em>cuartiles</em>, dividen la distribución de los datos en cuatro partes: 0 a 25%,25% a 50% , 50% a 75% y 75% a 100%; se acostumbra a notarlos por <span class="math inline">\(Q_1\)</span>, <span class="math inline">\(Q_2\)</span> y <span class="math inline">\(Q_3\)</span> <em>deciles</em>, dividen la distribución de los datos en diez partes: 0 a 10%, 10% a 20%, <span class="math inline">\(\cdots\)</span>, 90% a 100%, se notan por <span class="math inline">\(D_1,\cdots,D_9\)</span>; <em>percentiles</em>, dividen la distribución de los datos en 100 partes: 0 a 1%, 1% a 2%, <span class="math inline">\(\cdots\)</span>, 99% a 100%. En general los percentiles se notan por <span class="math inline">\(P_1,P_2,\cdots,P_{99}\)</span>, de esa forma es claro que, por ejemplo, <span class="math inline">\(P_{50}=Q_1=D_5\)</span> y <span class="math inline">\(P_{75}=Q_3\)</span>.</p>
+<div id="algoritmos-para-el-cálculo-de-cuantiles" class="section level4" number="3.2.3.1">
+<h4><span class="header-section-number">3.2.3.1</span> Algoritmos para el cálculo de cuantiles</h4>
+<p>Hay un número grande de definiciones distintas usadas para cuantiles muestrales en los paquetes para cálculo estadístico. Incluso es frecuente que dentro de un paquete se use una definición para calcular los cuantiles explícitamente mientras que puede usar otra para producir el boxplot, para el gráfico de probabilidad o para el QQ-plot <span class="citation">(<a href="#ref-HyndmanYanan" role="doc-biblioref">Hyndman and Fan 1996</a>)</span>.</p>
+<p>El cuantil <span class="math inline">\(p\)</span> de una distribución se define como
+<span class="math display" id="eq:cuantilpob">\[\begin{equation}
+Q(p)=F^{-1}(p)=\inf\{x: F(x)\geq p\},\hbox{ para }0&lt;p&lt;1\tag{3.8}
+\end{equation}\]</span>
+los cuantiles muestrales proporcionan una estimación no paramétrica de su contraparte poblacional basado en un conjunto de observaciones independientes <span class="math inline">\(X_1,X_2\cdots, X_n\)</span> de la distribución <span class="math inline">\(F\)</span>. Sea <span class="math inline">\(X_{(1)} ,X_{(2)}\cdots, X_{(n)}\)</span> los estadísticos de orden de <span class="math inline">\(X_1,X_2\cdots, X_n\)</span> y sea <span class="math inline">\(\widehat Q_i(p)\)</span> la <span class="math inline">\(i-\)</span>ésima definición del cuantil muestral. Los cuantiles muestrales definidos en los paquetes de cálculo estadístico están todos basados en uno o dos estadísticos de orden, y se pueden escribir como<br />
+<span class="math display" id="eq:cuantilmuestrali">\[\begin{equation}
+\widehat Q_i(p)=(1-\gamma )X_{(j)}+\gamma X_{(j+1)} \hbox{ donde } \frac {j-m}{n} \leq   p  &lt; \frac{j-m+1}{n}    \tag{3.9}
+\end{equation}\]</span>
+para algún <span class="math inline">\(m\in \mathbb{R}\)</span> y <span class="math inline">\(0\leq \gamma \leq 1\)</span>. El valor de <span class="math inline">\(\gamma\)</span> es función de <span class="math inline">\(j=\lfloor pn + m \rfloor\)</span> y <span class="math inline">\(g=pn+m-j\)</span>, en donde <span class="math inline">\(\lfloor u \rfloor\)</span> es el mayor entero que es menor o igual que <span class="math inline">\(u\)</span>. Tomando<br />
+<span class="math display">\[\begin{equation*}
+p_k=\frac{k-\alpha}{n-\alpha-\beta+1}
+\end{equation*}\]</span>
+e interpolando entre los puntos <span class="math inline">\((k,X_{(k)})\)</span> obtenemos un cuantil muestral de la forma <a href="Descriptiva.html#eq:cuantilmuestrali">(3.9)</a> tamando <span class="math inline">\(m=\alpha+p(1-\alpha-\beta)\)</span>, con <span class="math inline">\(\alpha=\beta=1\)</span> y <span class="math inline">\(\gamma=g\)</span>. De esta manera los paquetes <code>NumPy</code> y <code>Pandas</code> implementan los distintos métodos de cálculo de los cuantiles muestrales (fijados con el argumento <code>interpolation</code>). Por ejemplo, tomando <span class="math inline">\(\alpha=\beta=1\)</span> y <span class="math inline">\(\gamma=g\)</span> se tiene la interpolación lineal, que es la opción predeterminada en la función (en el caso de <code>NumPy</code>) o el método <code>quantile()</code> en el caso de <code>Pandas</code>. A continuación usamos los datos de la tabla <a href="Descriptiva.html#tab:ejemplomedia">3.1</a>, los cuales se muestran ordenados de menor a mayor en la tabla <a href="Descriptiva.html#tab:ejemplomediana">3.2</a>, para ilustrar el procedimiento. Calcularemos el percentil 25 o, lo que es lo mismo, el primer cuartil <span class="math inline">\(Q_1\)</span>. Los datos se han ingresado en el arreglo de <code>NumPy</code> como <code>datosn</code> y en una Serie de <code>Pandas</code> como <code>datosp</code></p>
+<div class="sourceCode" id="cb456"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb456-1"><a href="Descriptiva.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos ordenados </span></span>
+<span id="cb456-2"><a href="Descriptiva.html#cb456-2" aria-hidden="true" tabindex="-1"></a>datosO<span class="op">=</span>datosp.sort_values()</span>
+<span id="cb456-3"><a href="Descriptiva.html#cb456-3" aria-hidden="true" tabindex="-1"></a><span class="co"># numero de datos</span></span>
+<span id="cb456-4"><a href="Descriptiva.html#cb456-4" aria-hidden="true" tabindex="-1"></a>n<span class="op">=</span><span class="bu">len</span>(datosO) </span>
+<span id="cb456-5"><a href="Descriptiva.html#cb456-5" aria-hidden="true" tabindex="-1"></a><span class="co"># el percentil 25 (primer cuartil)</span></span>
+<span id="cb456-6"><a href="Descriptiva.html#cb456-6" aria-hidden="true" tabindex="-1"></a>p<span class="op">=</span><span class="fl">0.25</span></span>
+<span id="cb456-7"><a href="Descriptiva.html#cb456-7" aria-hidden="true" tabindex="-1"></a>alpha<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb456-8"><a href="Descriptiva.html#cb456-8" aria-hidden="true" tabindex="-1"></a>beta<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb456-9"><a href="Descriptiva.html#cb456-9" aria-hidden="true" tabindex="-1"></a>m<span class="op">=</span>alpha<span class="op">+</span>p<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>alpha<span class="op">-</span>beta)</span>
+<span id="cb456-10"><a href="Descriptiva.html#cb456-10" aria-hidden="true" tabindex="-1"></a>j<span class="op">=</span>np.int64(np.floor(p<span class="op">*</span>n<span class="op">+</span>m))</span>
+<span id="cb456-11"><a href="Descriptiva.html#cb456-11" aria-hidden="true" tabindex="-1"></a>g<span class="op">=</span>p<span class="op">*</span>n<span class="op">+</span>m<span class="op">-</span>j</span>
+<span id="cb456-12"><a href="Descriptiva.html#cb456-12" aria-hidden="true" tabindex="-1"></a>gamma<span class="op">=</span>g</span>
+<span id="cb456-13"><a href="Descriptiva.html#cb456-13" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="op">-</span>gamma)<span class="op">*</span>datosO.values[j<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span>gamma<span class="op">*</span>datosO.values[j]</span></code></pre></div>
+<pre><code>## 5.5</code></pre>
+<p>Note que en la última línea del bloque de código anterior se ha implementado la ecuación <a href="Descriptiva.html#eq:cuantilmuestrali">(3.9)</a> con <span class="math inline">\(\alpha=\beta=1\)</span> y <span class="math inline">\(\gamma=g\)</span>.
+El primer cuartil de los datos de la tabla <a href="Descriptiva.html#tab:ejemplomedia">3.1</a> usando el método de interpolación lineal es 5.5. El nombre <em>interpolación</em> es debido a que para el cálculo se <em>interpola</em> la función de distribución empírica (<code>ecdf</code>) que es una función escalonada, por la naturaleza discreta de los doatos, de la forma como se hace la interpolación aparecen los distintos métodos disponibles en los paquetes de cálculo estadístico.</p>
+</div>
+<div id="cálculo-de-cuantiles-con-pandas" class="section level4" number="3.2.3.2">
+<h4><span class="header-section-number">3.2.3.2</span> Cálculo de cuantiles con Pandas</h4>
+<p>Si tienes los datos como una serie de <code>Pandas</code> puedes usar el método <code>.quantile()</code> mientras</p>
+<div class="sourceCode" id="cb458"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb458-1"><a href="Descriptiva.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="co"># interpolación lineal, opción predeterminada </span></span>
+<span id="cb458-2"><a href="Descriptiva.html#cb458-2" aria-hidden="true" tabindex="-1"></a>datosp.quantile(<span class="fl">0.25</span>)</span></code></pre></div>
+<pre><code>## 5.5</code></pre>
+<p>Si usa <code>datosp.quantile()</code>, sin entregar el valor del percentil, se calcula la mediana. Si desea calcular más de un percentil se debe entregar una lista con los valores de las probabilidades. Por ejemplo, en la siguiente línea de código se calcula el mínimo, el primer y tercer cuartil, el percentil 85 y el máximo</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb460-1"><a href="Descriptiva.html#cb460-1" aria-hidden="true" tabindex="-1"></a>datosp.quantile(q<span class="op">=</span>[<span class="dv">0</span>,<span class="fl">0.25</span>,<span class="fl">0.75</span>,<span class="fl">0.85</span>,<span class="dv">1</span>])</span></code></pre></div>
+<p>A continuación se muestran los otros tipos de interpolación disponibles en <code>Pandas</code>:</p>
+<div class="sourceCode" id="cb461"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb461-1"><a href="Descriptiva.html#cb461-1" aria-hidden="true" tabindex="-1"></a>datosp.quantile(<span class="fl">0.25</span>,interpolation<span class="op">=</span><span class="st">&#39;lower&#39;</span>)</span>
+<span id="cb461-2"><a href="Descriptiva.html#cb461-2" aria-hidden="true" tabindex="-1"></a>datosp.quantile(<span class="fl">0.25</span>,interpolation<span class="op">=</span><span class="st">&#39;higher&#39;</span>)</span>
+<span id="cb461-3"><a href="Descriptiva.html#cb461-3" aria-hidden="true" tabindex="-1"></a>datosp.quantile(<span class="fl">0.25</span>,interpolation<span class="op">=</span><span class="st">&#39;midpoint&#39;</span>)</span>
+<span id="cb461-4"><a href="Descriptiva.html#cb461-4" aria-hidden="true" tabindex="-1"></a>datosp.quantile(<span class="fl">0.25</span>,interpolation<span class="op">=</span><span class="st">&#39;nearest&#39;</span>) </span></code></pre></div>
+<p>obteniendo como respuesta 5, 6, 5.5 y 6 respectivamente.</p>
+</div>
+<div id="cálculo-de-cuantiles-con-numpy" class="section level4" number="3.2.3.3">
+<h4><span class="header-section-number">3.2.3.3</span> Cálculo de cuantiles con NumPy</h4>
+<p>Si se prefiere usar <code>NumPy</code> contamos con la función <code>quantile()</code>, veamos ejemplos de su uso, calculando el percentil 25 usando los datos de la tabla <a href="Descriptiva.html#tab:ejemplomediana">3.2</a>, los cuales se tiene en un arreglo de <code>NumPy</code> con nombre <code>datosn</code></p>
+<div class="sourceCode" id="cb462"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb462-1"><a href="Descriptiva.html#cb462-1" aria-hidden="true" tabindex="-1"></a>np.quantile(datosn,q<span class="op">=</span><span class="fl">0.25</span>)</span></code></pre></div>
+<pre><code>## 5.5</code></pre>
+<p>Al igual que <code>Pandas</code> la interpolación usada por <code>NumPy</code> es la lineal. En <code>NumPy</code> el valor del percentil a calcular es obligarotio (a diferencia de <code>Pandas</code> que por defecto calcula la mediana) y puede ser un valor real o un arreglo de valores entre cero y uno. A continuación se calcula el mínimo, el primer y tercer cuartil, el percentil 85 y el máximo</p>
+<div class="sourceCode" id="cb464"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb464-1"><a href="Descriptiva.html#cb464-1" aria-hidden="true" tabindex="-1"></a>np.quantile(datosn,q<span class="op">=</span>[<span class="dv">0</span>,<span class="fl">0.25</span>,<span class="fl">0.75</span>,<span class="fl">0.85</span>,<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## array([ 3. ,  5.5,  8. ,  8. , 11. ])</code></pre>
+<p>para los distintos tipos de interpolación se procede de manera similar a como se hace en <code>Pandas</code></p>
+<div class="sourceCode" id="cb466"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb466-1"><a href="Descriptiva.html#cb466-1" aria-hidden="true" tabindex="-1"></a>np.quantile(datosn,q<span class="op">=</span><span class="fl">0.25</span>,interpolation<span class="op">=</span><span class="st">&#39;lower&#39;</span>)</span>
+<span id="cb466-2"><a href="Descriptiva.html#cb466-2" aria-hidden="true" tabindex="-1"></a>np.quantile(datosn,q<span class="op">=</span><span class="fl">0.25</span>,interpolation<span class="op">=</span><span class="st">&#39;higher&#39;</span>)</span>
+<span id="cb466-3"><a href="Descriptiva.html#cb466-3" aria-hidden="true" tabindex="-1"></a>np.quantile(datosn,q<span class="op">=</span><span class="fl">0.25</span>,interpolation<span class="op">=</span><span class="st">&#39;midpoint&#39;</span>)</span>
+<span id="cb466-4"><a href="Descriptiva.html#cb466-4" aria-hidden="true" tabindex="-1"></a>np.quantile(datosn,q<span class="op">=</span><span class="fl">0.25</span>,interpolation<span class="op">=</span><span class="st">&#39;nearest&#39;</span>) </span></code></pre></div>
+<pre><code>## &lt;string&gt;:1: DeprecationWarning: the `interpolation=` argument to quantile was renamed to `method=`, which has additional options.
+## Users of the modes &#39;nearest&#39;, &#39;lower&#39;, &#39;higher&#39;, or &#39;midpoint&#39; are encouraged to review the method they. (Deprecated NumPy 1.22)</code></pre>
+<p>de las líneas de código anterior se obtiene como respuesta
+5, 6, 5.5 y 6 respectivamente.</p>
+</div>
+</div>
+</div>
+<div id="gráficos" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Gráficos</h2>
+<div id="graficos-para-datos-categóricos" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Graficos para datos categóricos</h3>
+<p>Se ilustrará la realización de gráficos de barras y circulares (torta) en Python con los datos de la tabla <a href="Descriptiva.html#tab:DatosEjemploRse">3.4</a> los cuales fueron tomados de <span class="citation">(<a href="#ref-webster" role="doc-biblioref">Webster 2000</a>)</span>.</p>
+<div class="example">
+<p><span id="exm:DatosRse" class="example"><strong>Example 3.5  (Graficio de barras) </strong></span>En una escala de 1 a 4, siendo 4 el mejor, un grupo de expertos califica la <em>responsabilidad social empresarial</em> de 50 organizaciones clasificadas como publicas, indicadas con un <code>1</code> en los datos de la tabla <a href="Descriptiva.html#tab:DatosEjemploRse">3.4</a>; privadas indicadas con un <code>2</code> o controladas por el gobierno, indicadas con un <code>3</code>.</p>
+<table>
+<caption><span id="tab:DatosEjemploRse">Table 3.4: </span>Datos de responsabilidad social empresarial. Fuente: <span class="citation">(<a href="#ref-webster" role="doc-biblioref">Webster 2000</a>)</span></caption>
+<thead>
+<tr class="header">
+<th align="right">Tipo</th>
+<th align="right">Calif</th>
+<th align="right">Tipo</th>
+<th align="right">Calif</th>
+<th align="right">Tipo</th>
+<th align="right">Calif</th>
+<th align="right">Tipo</th>
+<th align="right">Calif</th>
+<th align="right">Tipo</th>
+<th align="right">Calif</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>Para presentar gráficamente los datos, primero se resumen en una tabla de contingencia (de doble entrada) y luego, a partir de la tabla, se elaboran gráficos de barra y torta.</p>
+</div>
+<p>Seguidamente leemos los datos y los organizamos en un <code>DataFrame</code> de pandas como se muestra a continuación</p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb468-1"><a href="Descriptiva.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb468-2"><a href="Descriptiva.html#cb468-2" aria-hidden="true" tabindex="-1"></a>tipo<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>]</span>
+<span id="cb468-3"><a href="Descriptiva.html#cb468-3" aria-hidden="true" tabindex="-1"></a>clasi<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>] </span>
+<span id="cb468-4"><a href="Descriptiva.html#cb468-4" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>pd.DataFrame({<span class="st">&#39;Tipo&#39;</span>:tipo,<span class="st">&#39;Clasi&#39;</span>:clasi})</span>
+<span id="cb468-5"><a href="Descriptiva.html#cb468-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div>
+<pre><code>##    Tipo  Clasi
+## 0     1      1
+## 1     2      2
+## 2     2      3
+## 3     3      2
+## 4     1      4</code></pre>
+<p>En el <code>DataFrame</code> de nombre <code>df</code> se encuentran los datos pero en formato numérico, como el tipo de empresa y la calificación son variables categóricas (factores), es necesario hacer la conversión</p>
+<div class="sourceCode" id="cb470"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb470-1"><a href="Descriptiva.html#cb470-1" aria-hidden="true" tabindex="-1"></a>tipof<span class="op">=</span>{<span class="dv">1</span>:<span class="st">&quot;Publica&quot;</span>,<span class="dv">2</span>:<span class="st">&quot;Privada&quot;</span>,<span class="dv">3</span>:<span class="st">&quot;Controlada&quot;</span>}</span>
+<span id="cb470-2"><a href="Descriptiva.html#cb470-2" aria-hidden="true" tabindex="-1"></a>clasif<span class="op">=</span>{<span class="dv">1</span>:<span class="st">&quot;Cal1&quot;</span>,<span class="dv">2</span>:<span class="st">&quot;Cal2&quot;</span>,<span class="dv">3</span>:<span class="st">&quot;Cal3&quot;</span>,<span class="dv">4</span>:<span class="st">&quot;Cal4&quot;</span>}</span>
+<span id="cb470-3"><a href="Descriptiva.html#cb470-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&quot;Tipo&quot;</span>]<span class="op">=</span>df[<span class="st">&quot;Tipo&quot;</span>].replace(tipof) </span>
+<span id="cb470-4"><a href="Descriptiva.html#cb470-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&quot;Clasi&quot;</span>]<span class="op">=</span>df[<span class="st">&quot;Clasi&quot;</span>].replace(clasif)</span>
+<span id="cb470-5"><a href="Descriptiva.html#cb470-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div>
+<pre><code>##          Tipo Clasi
+## 0     Publica  Cal1
+## 1     Privada  Cal2
+## 2     Privada  Cal3
+## 3  Controlada  Cal2
+## 4     Publica  Cal4</code></pre>
+<p>el bloque de código anterior reemplaza los datos numéricos por su equivalente según los nombres de las categorías, por ejemplo, en el caso de <code>Tipo</code>, <code>1:"Publica"</code>. Sin embargo, si se usa <code>df.info()</code> podemos verificar que el tipo de datos correspondiente a las columnas <code>Tipo</code> y <code>Clasi</code> en <code>df</code> es <code>object</code>, que es la forma como pandas identifica columnas que contienen texto. Aunque para los cálculos que haremos no es estrictamente obligatorio (pero si una buena práctica), a continuación se crea un factor o variable categórica, identificada por pandas como <code>category</code>, a partir de las columnas de texto <code>Tipo</code> y <code>Clasi</code></p>
+<div class="sourceCode" id="cb472"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb472-1"><a href="Descriptiva.html#cb472-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&quot;Tipo&quot;</span>]<span class="op">=</span>pd.Categorical(df[<span class="st">&quot;Tipo&quot;</span>])</span>
+<span id="cb472-2"><a href="Descriptiva.html#cb472-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">&quot;Clasi&quot;</span>]<span class="op">=</span>pd.Categorical(df[<span class="st">&quot;Clasi&quot;</span>])</span>
+<span id="cb472-3"><a href="Descriptiva.html#cb472-3" aria-hidden="true" tabindex="-1"></a>df.info()</span></code></pre></div>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+## RangeIndex: 50 entries, 0 to 49
+## Data columns (total 2 columns):
+##  #   Column  Non-Null Count  Dtype   
+## ---  ------  --------------  -----   
+##  0   Tipo    50 non-null     category
+##  1   Clasi   50 non-null     category
+## dtypes: category(2)
+## memory usage: 564.0 bytes</code></pre>
+<p>La tabla de doble entrada o tabla de contingencia la obtenemos con la función <code>crosstab()</code> de <code>Pandas</code>, veamos</p>
+<div class="sourceCode" id="cb474"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb474-1"><a href="Descriptiva.html#cb474-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df.Tipo,df.Clasi) </span></code></pre></div>
+<pre><code>## Clasi       Cal1  Cal2  Cal3  Cal4
+## Tipo                              
+## Controlada     3     5     4     4
+## Privada        3     7     5     4
+## Publica        7     5     1     2</code></pre>
+<p>si queremos que se adicionen las marginales a la tabla usamos la opción <code>margins=True</code></p>
+<div class="sourceCode" id="cb476"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb476-1"><a href="Descriptiva.html#cb476-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df.Tipo,df.Clasi,margins<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<pre><code>## Clasi       Cal1  Cal2  Cal3  Cal4  All
+## Tipo                                   
+## Controlada     3     5     4     4   16
+## Privada        3     7     5     4   19
+## Publica        7     5     1     2   15
+## All           13    17    10    10   50</code></pre>
+<p>Para obtener las tablas de frecuencias relativas (o porcentajes) con respecto al total general, total de filas o total de columnas se usa la opción <code>normalize</code>, cuyas opciones son: <code>'all'</code> para porcentajes con respecto al total general, <code>'index'</code> para porcentajes con respecto al total de fila y <code>'columns'</code> para porcentajes con respecto al total de columna</p>
+<div class="sourceCode" id="cb478"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb478-1"><a href="Descriptiva.html#cb478-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df.Tipo,df.Clasi,normalize<span class="op">=</span><span class="st">&#39;all&#39;</span>,margins<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<pre><code>## Clasi       Cal1  Cal2  Cal3  Cal4   All
+## Tipo                                    
+## Controlada  0.06  0.10  0.08  0.08  0.32
+## Privada     0.06  0.14  0.10  0.08  0.38
+## Publica     0.14  0.10  0.02  0.04  0.30
+## All         0.26  0.34  0.20  0.20  1.00</code></pre>
+<p>La tabla anterior muestra las frecuencias relativas con respecto al total general <span class="math inline">\((n_{ij}/N)\)</span>, para obtener los porcentajes solo falta multiplicar por 100, de la siguiente forma</p>
+<div class="sourceCode" id="cb480"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb480-1"><a href="Descriptiva.html#cb480-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df.Tipo,df.Clasi,normalize<span class="op">=</span><span class="st">&#39;all&#39;</span>,margins<span class="op">=</span><span class="va">True</span>)<span class="op">*</span><span class="dv">100</span></span></code></pre></div>
+<div id="gráfico-de-barras" class="section level4" number="3.3.1.1">
+<h4><span class="header-section-number">3.3.1.1</span> Gráfico de barras</h4>
+<p>Primero presentamos los datos de <code>tipo</code> y <code>clasificación</code>, separadamente en un gráfico de barras simple. Para eso a continuación realizamos la tabulación a partir de cada columna, luego se usa el método <code>.plot()</code>, definido sobre <code>Series</code> de Pandas, con la opción <code>kind=bar</code></p>
+<div class="sourceCode" id="cb481"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb481-1"><a href="Descriptiva.html#cb481-1" aria-hidden="true" tabindex="-1"></a>tablaC<span class="op">=</span>df.Clasi.value_counts()</span>
+<span id="cb481-2"><a href="Descriptiva.html#cb481-2" aria-hidden="true" tabindex="-1"></a>tablaT<span class="op">=</span>df.Tipo.value_counts()</span>
+<span id="cb481-3"><a href="Descriptiva.html#cb481-3" aria-hidden="true" tabindex="-1"></a>tablaC.plot(kind<span class="op">=</span><span class="st">&#39;bar&#39;</span>,rot<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb481-4"><a href="Descriptiva.html#cb481-4" aria-hidden="true" tabindex="-1"></a>tablaT.plot(kind<span class="op">=</span><span class="st">&#39;bar&#39;</span>,rot<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:graficobarrassimples"></span>
+<img src="_main_files/figure-html/graficobarrassimples-1.png" alt="Gráfico de barras. Izquierda: datos de clasificación. Derecha: datos de tipo de empresa" width="672" />
+<p class="caption">
+Figure 3.1: Gráfico de barras. Izquierda: datos de clasificación. Derecha: datos de tipo de empresa
+</p>
+</div>
+<p>Se puede mostrar la información de la figura <a href="Descriptiva.html#fig:graficobarrassimples">3.1</a> en un solo gráfico de barras que puede ser el de barras múltiples (figura <a href="Descriptiva.html#fig:graficobarrasmultiples">3.2</a> ) o el de barras apiladas (figura <a href="Descriptiva.html#fig:graficobarrasapiladas">3.3</a> )</p>
+<div class="sourceCode" id="cb482"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb482-1"><a href="Descriptiva.html#cb482-1" aria-hidden="true" tabindex="-1"></a>tabla2<span class="op">=</span>pd.crosstab(df.Tipo,df.Clasi)</span>
+<span id="cb482-2"><a href="Descriptiva.html#cb482-2" aria-hidden="true" tabindex="-1"></a>tabla2.plot(kind<span class="op">=</span><span class="st">&#39;bar&#39;</span>,alpha<span class="op">=</span><span class="fl">0.7</span>,rot<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb482-3"><a href="Descriptiva.html#cb482-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&quot;Tipo de empresa&quot;</span>)</span>
+<span id="cb482-4"><a href="Descriptiva.html#cb482-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&quot;Frecuencia&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:graficobarrasmultiples"></span>
+<img src="_main_files/figure-html/graficobarrasmultiples-3.png" alt="Gráfico de barras múltiples con los datos de la tabla \@ref(tab:DatosEjemploRse)." width="672" />
+<p class="caption">
+Figure 3.2: Gráfico de barras múltiples con los datos de la tabla <a href="Descriptiva.html#tab:DatosEjemploRse">3.4</a>.
+</p>
+</div>
+<p>El gráfico de barras apiladas consigue con la opción <code>stacked=True</code>, también se pueden graficar las barras de cada categoría en un panel distinto, eso se logra con la opción <code>subplots=True</code>.</p>
+<div class="figure"><span style="display:block;" id="fig:graficobarrasapiladas"></span>
+<img src="_main_files/figure-html/graficobarrasapiladas-5.png" alt="Gráfico de barras apiladas con los datos de la tabla \@ref(tab:DatosEjemploRse)." width="672" />
+<p class="caption">
+Figure 3.3: Gráfico de barras apiladas con los datos de la tabla <a href="Descriptiva.html#tab:DatosEjemploRse">3.4</a>.
+</p>
+</div>
+<div class="sourceCode" id="cb483"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb483-1"><a href="Descriptiva.html#cb483-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="op">=</span>pd.crosstab(df.Clasi,df.Tipo)</span>
+<span id="cb483-2"><a href="Descriptiva.html#cb483-2" aria-hidden="true" tabindex="-1"></a>tabla3.plot(kind<span class="op">=</span><span class="st">&quot;bar&quot;</span>, subplots<span class="op">=</span><span class="va">True</span>,title<span class="op">=</span><span class="st">&quot;&quot;</span>,xlabel<span class="op">=</span><span class="st">&quot;&quot;</span>) </span>
+<span id="cb483-3"><a href="Descriptiva.html#cb483-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+</div>
+<div id="gráfico-circular" class="section level4" number="3.3.1.2">
+<h4><span class="header-section-number">3.3.1.2</span> Gráfico circular</h4>
+<p>Este gráfico se basa en una proporcionalidad entre la frecuencia y el ángulo central de una circunferencia, de tal manera que a la frecuencia total le corresponde el ángulo central de 360 grados. El ángulo que le corresponde a la categoría <span class="math inline">\(i\)</span> se determina por
+<span class="math display">\[\begin{equation*}
+\theta_i=\frac{f_i\times 360}{\sum f_i}
+\end{equation*}\]</span>
+donde <span class="math inline">\(f_i\)</span> es la frecuencia de la <span class="math inline">\(i-\)</span>ésima categoría. El gráfico circular se puede elaborar con el método <code>.pie()</code></p>
+<div class="sourceCode" id="cb484"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb484-1"><a href="Descriptiva.html#cb484-1" aria-hidden="true" tabindex="-1"></a>tablaT.plot(kind<span class="op">=</span><span class="st">&#39;pie&#39;</span>,autopct<span class="op">=</span><span class="st">&#39;</span><span class="sc">%1.1f%%</span><span class="st">&#39;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-220"></span>
+<img src="_main_files/figure-html/unnamed-chunk-220-7.png" alt="Gráfico circular con los datos de tipo de empresa (tabla   \@ref(tab:DatosEjemploRse))" width="672" />
+<p class="caption">
+Figure 3.4: Gráfico circular con los datos de tipo de empresa (tabla <a href="Descriptiva.html#tab:DatosEjemploRse">3.4</a>)
+</p>
+</div>
+</div>
+</div>
+<div id="gráfico-para-datos-cuantitativos" class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Gráfico para datos cuantitativos</h3>
+<p>Para los ejemplos de esta sección usaremos los datos de la tabla <a href="Descriptiva.html#tab:ejercicioresistencia">3.5</a>, que corresponden a medidas de resistencia a la tensión, en libras por pulgada cuadrada (psi), de 80 muestras de una nueva aleación de aluminio litio que está siendo evaluada como posible material para la fabricación de elementos estructurales de aeronaves, tomados de <span class="citation">(<a href="#ref-mongomery" role="doc-biblioref">Mongomery and Runger 2003</a>)</span>.</p>
+<div id="gráfico-de-tallos-y-hojas" class="section level4" number="3.3.2.1">
+<h4><span class="header-section-number">3.3.2.1</span> Gráfico de tallos y hojas</h4>
+<p>Este gráfico se utiliza para mostrar la frecuencia absoluta en diferentes clases de forma similar a la tabla de distribución de frecuencias o un histograma. Este gráfico, que principalmente se recomienda para conjuntos de datos pequeños, es una presentación tabular donde cada valor de datos se divide en un “tallo” (el primer dígito o dígitos) y una “hoja” (generalmente el último dígito).</p>
+<table>
+<caption><span id="tab:ejercicioresistencia">Table 3.5: </span>Datos de resistencia a la tensión. Fuente: <span class="citation">(<a href="#ref-mongomery" role="doc-biblioref">Mongomery and Runger 2003</a>)</span></caption>
+<tbody>
+<tr class="odd">
+<td align="right">105</td>
+<td align="right">153</td>
+<td align="right">181</td>
+<td align="right">158</td>
+<td align="right">134</td>
+<td align="right">101</td>
+<td align="right">145</td>
+<td align="right">150</td>
+</tr>
+<tr class="even">
+<td align="right">221</td>
+<td align="right">174</td>
+<td align="right">158</td>
+<td align="right">133</td>
+<td align="right">178</td>
+<td align="right">171</td>
+<td align="right">171</td>
+<td align="right">135</td>
+</tr>
+<tr class="odd">
+<td align="right">183</td>
+<td align="right">120</td>
+<td align="right">176</td>
+<td align="right">207</td>
+<td align="right">76</td>
+<td align="right">165</td>
+<td align="right">148</td>
+<td align="right">196</td>
+</tr>
+<tr class="even">
+<td align="right">186</td>
+<td align="right">168</td>
+<td align="right">110</td>
+<td align="right">180</td>
+<td align="right">167</td>
+<td align="right">172</td>
+<td align="right">158</td>
+<td align="right">201</td>
+</tr>
+<tr class="odd">
+<td align="right">121</td>
+<td align="right">167</td>
+<td align="right">163</td>
+<td align="right">190</td>
+<td align="right">184</td>
+<td align="right">158</td>
+<td align="right">160</td>
+<td align="right">200</td>
+</tr>
+<tr class="even">
+<td align="right">181</td>
+<td align="right">141</td>
+<td align="right">131</td>
+<td align="right">193</td>
+<td align="right">135</td>
+<td align="right">169</td>
+<td align="right">175</td>
+<td align="right">176</td>
+</tr>
+<tr class="odd">
+<td align="right">180</td>
+<td align="right">245</td>
+<td align="right">154</td>
+<td align="right">194</td>
+<td align="right">229</td>
+<td align="right">199</td>
+<td align="right">149</td>
+<td align="right">150</td>
+</tr>
+<tr class="even">
+<td align="right">143</td>
+<td align="right">228</td>
+<td align="right">115</td>
+<td align="right">133</td>
+<td align="right">146</td>
+<td align="right">151</td>
+<td align="right">87</td>
+<td align="right">170</td>
+</tr>
+<tr class="odd">
+<td align="right">97</td>
+<td align="right">174</td>
+<td align="right">160</td>
+<td align="right">156</td>
+<td align="right">218</td>
+<td align="right">142</td>
+<td align="right">160</td>
+<td align="right">118</td>
+</tr>
+<tr class="even">
+<td align="right">154</td>
+<td align="right">199</td>
+<td align="right">208</td>
+<td align="right">123</td>
+<td align="right">157</td>
+<td align="right">163</td>
+<td align="right">237</td>
+<td align="right">149</td>
+</tr>
+</tbody>
+</table>
+<p>El procedimiento para el construir el gráfico de tallos y hojas es:</p>
+<ul>
+<li><p>Separe cada observación/dato en un tallo que consistirá en todos excepto el dígito más a la derecha y la hoja, el dígito más a la derecha.</p></li>
+<li><p>La hoja debe tener solo un dígito, mientras que el tallo puede tener tantos dígitos como sea posible.</p></li>
+<li><p>Escriba el tallo en una columna vertical con el más pequeño en la parte superior y luego dibuje una línea vertical a la derecha de esta columna.</p></li>
+<li><p>Escribe cada hoja correspondiente en la fila a la derecha de su tallo justo después de la línea vertical, en orden ascendente desde el tallo.</p></li>
+</ul>
+<p>Para hacer este gráfico en Python se cuenta con la función <code>stem_graphic()</code> del módulo <code>stemgraphic</code> el cual debe estar previamente instalado. A continuación se leen los datos de la tabla <a href="Descriptiva.html#tab:ejercicioresistencia">3.5</a> como una <code>Serie</code> de <code>Pandas</code> aunque la función también acepta listas y arreglos de <code>NumPy</code></p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb485-1"><a href="Descriptiva.html#cb485-1" aria-hidden="true" tabindex="-1"></a>t11<span class="op">=</span>pd.Series([<span class="dv">105</span>,<span class="dv">221</span>,<span class="dv">183</span>,<span class="dv">186</span>,<span class="dv">121</span>,<span class="dv">181</span>,<span class="dv">180</span>,<span class="dv">143</span>,</span>
+<span id="cb485-2"><a href="Descriptiva.html#cb485-2" aria-hidden="true" tabindex="-1"></a><span class="dv">97</span>,<span class="dv">154</span>,<span class="dv">153</span>,<span class="dv">174</span>,<span class="dv">120</span>,<span class="dv">168</span>,<span class="dv">167</span>,<span class="dv">141</span>,</span>
+<span id="cb485-3"><a href="Descriptiva.html#cb485-3" aria-hidden="true" tabindex="-1"></a><span class="dv">245</span>,<span class="dv">228</span>,<span class="dv">174</span>,<span class="dv">199</span>,<span class="dv">181</span>,<span class="dv">158</span>,<span class="dv">176</span>,<span class="dv">110</span>,</span>
+<span id="cb485-4"><a href="Descriptiva.html#cb485-4" aria-hidden="true" tabindex="-1"></a><span class="dv">163</span>,<span class="dv">131</span>,<span class="dv">154</span>,<span class="dv">115</span>,<span class="dv">160</span>,<span class="dv">208</span>,<span class="dv">158</span>,<span class="dv">133</span>,</span>
+<span id="cb485-5"><a href="Descriptiva.html#cb485-5" aria-hidden="true" tabindex="-1"></a><span class="dv">207</span>,<span class="dv">180</span>,<span class="dv">190</span>,<span class="dv">193</span>,<span class="dv">194</span>,<span class="dv">133</span>,<span class="dv">156</span>,<span class="dv">123</span>,</span>
+<span id="cb485-6"><a href="Descriptiva.html#cb485-6" aria-hidden="true" tabindex="-1"></a><span class="dv">134</span>,<span class="dv">178</span>,<span class="dv">76</span>,<span class="dv">167</span>,<span class="dv">184</span>,<span class="dv">135</span>,<span class="dv">229</span>,<span class="dv">146</span>,</span>
+<span id="cb485-7"><a href="Descriptiva.html#cb485-7" aria-hidden="true" tabindex="-1"></a><span class="dv">218</span>,<span class="dv">157</span>,<span class="dv">101</span>,<span class="dv">171</span>,<span class="dv">165</span>,<span class="dv">172</span>,<span class="dv">158</span>,<span class="dv">169</span>,</span>
+<span id="cb485-8"><a href="Descriptiva.html#cb485-8" aria-hidden="true" tabindex="-1"></a><span class="dv">199</span>,<span class="dv">151</span>,<span class="dv">142</span>,<span class="dv">163</span>,<span class="dv">145</span>,<span class="dv">171</span>,<span class="dv">148</span>,<span class="dv">158</span>,</span>
+<span id="cb485-9"><a href="Descriptiva.html#cb485-9" aria-hidden="true" tabindex="-1"></a><span class="dv">160</span>,<span class="dv">175</span>,<span class="dv">149</span>,<span class="dv">87</span>,<span class="dv">160</span>,<span class="dv">237</span>,<span class="dv">150</span>,<span class="dv">135</span>,</span>
+<span id="cb485-10"><a href="Descriptiva.html#cb485-10" aria-hidden="true" tabindex="-1"></a><span class="dv">196</span>,<span class="dv">201</span>,<span class="dv">200</span>,<span class="dv">176</span>,<span class="dv">150</span>,<span class="dv">170</span>,<span class="dv">118</span>,<span class="dv">149</span>])</span></code></pre></div>
+<p>A continuación se importa y se hace el llamado a la función <code>stemgraphic</code>. La opción <code>scale = 10</code> indica que las clases serán de amplitud 10 esto es. 70-80, 80-90, y así sucesivamente. La opción <code>asc=False</code> es para que el ordenamiento de los datos se haga de menor a mayor y no al contrario, como es la configuración predeterminada.</p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb486-1"><a href="Descriptiva.html#cb486-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> stemgraphic <span class="im">import</span> stem_graphic </span>
+<span id="cb486-2"><a href="Descriptiva.html#cb486-2" aria-hidden="true" tabindex="-1"></a>fig<span class="op">=</span>stem_graphic(t11, scale <span class="op">=</span> <span class="dv">10</span>,asc<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb486-3"><a href="Descriptiva.html#cb486-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:graficobatallos"></span>
+<img src="_main_files/figure-html/graficobatallos-1.png" alt="Gráfico de tallos y hojas a partir de los datos de la tabla \@ref(tab:ejercicioresistencia) " width="720" />
+<p class="caption">
+Figure 3.5: Gráfico de tallos y hojas a partir de los datos de la tabla <a href="Descriptiva.html#tab:ejercicioresistencia">3.5</a>
+</p>
+</div>
+</div>
+<div id="histograma-y-tablas-de-frecuencias" class="section level4" number="3.3.2.2">
+<h4><span class="header-section-number">3.3.2.2</span> Histograma y tablas de frecuencias</h4>
+<p>Un histograma es una representación de la distribución de los datos. Para su construcción se agrupan los valores en rangos o intervalos conocidos como clases y se registra cuántos datos pertenecen a cada clase, este número se conoce como la frecuencia de la clase. En el eje horizontal de un plano cartesiano se ubican los límites de los intervalos y en el vertical se ubican las frecuencias, encima de cada intervalo se dibuja una barra cuya altura es igual a la frecuencia de su intervalo correspondiente. Un parámetro importante para la construcción del histograma es el número de intervalos a tomar, de forma predeterminada en NumPy y Pandas este valor viene fijado en 10, con la opción <code>bins = 10</code>, aunque en la literatura se encuentran varias fórmulas empíricas como <span class="math inline">\(\sqrt n\)</span>, <span class="math inline">\(1+3.3\log_{10}(n)\)</span> o <span class="math inline">\(\ln{n}/\ln{2}\)</span>, entre otras. Con la información del número de intervalos de clase, las funciones de Python para graficar el histograma calculan los límites de los intervalos, sin embargo, también es posible entregar a la función de manera explícita los límites a usar. Veamos como se grafica el histograma, usando los datos de la tabla <a href="Descriptiva.html#tab:ejercicioresistencia">3.5</a> y el método <code>.hist</code> aplicable a Series y <code>DataFrames</code> de Pandas.</p>
+<div class="sourceCode" id="cb487"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb487-1"><a href="Descriptiva.html#cb487-1" aria-hidden="true" tabindex="-1"></a>t11.hist() <span class="co"># t11 serie de Pandas</span></span>
+<span id="cb487-2"><a href="Descriptiva.html#cb487-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:histograma1"></span>
+<img src="_main_files/figure-html/histograma1-3.png" alt="Histograma de los datos de la tabla \@ref(tab:ejercicioresistencia) realizado con Pandas" width="720" />
+<p class="caption">
+Figure 3.6: Histograma de los datos de la tabla <a href="Descriptiva.html#tab:ejercicioresistencia">3.5</a> realizado con Pandas
+</p>
+</div>
+<p>Note en la figura <a href="Descriptiva.html#fig:histograma1">3.6</a> que el histograma que hace pandas con el método <code>.hist</code> de manera predeterminada tiene 10 barras (intervalos), podemos cambiar eso con la opción <code>bins</code>, por ejemplo si queremos el histograma con 9 barras procedemos de la siguiente forma</p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb488-1"><a href="Descriptiva.html#cb488-1" aria-hidden="true" tabindex="-1"></a>t11.hist(bins<span class="op">=</span><span class="dv">9</span>) </span>
+<span id="cb488-2"><a href="Descriptiva.html#cb488-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p>En el siguiente bloque de código se entregan los límites de los intervalos de clase, de manera explícita, como un arreglo de NumPy</p>
+<div class="sourceCode" id="cb489"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb489-1"><a href="Descriptiva.html#cb489-1" aria-hidden="true" tabindex="-1"></a>t11.hist(bins<span class="op">=</span>np.arange(<span class="dv">70</span>,<span class="dv">260</span>,<span class="dv">20</span>))</span>
+<span id="cb489-2"><a href="Descriptiva.html#cb489-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p>Un gráfico muy útil en el análisis de datos es el histograma junto con una estimación de la función de densidad de los datos, una forma de estimarla es mediante el método no paramétrico conocido como <code>kernel density</code>, otra es asumiendo algún modelo paramétrico para el mecanismo aleatorio que genera los datos, estimando sus parámetros con la información disponible. A continuación se construye el histograma usando las dos formas mencionadas. Lo primero que hacemos es calcular la media y la desviación estándar de los datos, como se mostró en la sección para evaluar la función de densidad normal</p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb490-1"><a href="Descriptiva.html#cb490-1" aria-hidden="true" tabindex="-1"></a>mu<span class="op">=</span>t11.mean()</span>
+<span id="cb490-2"><a href="Descriptiva.html#cb490-2" aria-hidden="true" tabindex="-1"></a>sd<span class="op">=</span>t11.std()</span>
+<span id="cb490-3"><a href="Descriptiva.html#cb490-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb490-4"><a href="Descriptiva.html#cb490-4" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>norm(loc<span class="op">=</span>mu,scale<span class="op">=</span>sd)</span>
+<span id="cb490-5"><a href="Descriptiva.html#cb490-5" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span>np.linspace(<span class="dv">65</span>,<span class="dv">255</span>,<span class="dv">500</span>)</span>
+<span id="cb490-6"><a href="Descriptiva.html#cb490-6" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>X.pdf(x)</span></code></pre></div>
+<p>a continuación se instancia el objeto <code>X</code> como una variable aleatoria normal con la media y desviación estándar calculadas anteriormente, note el uso del modulo <code>scipy.stats</code></p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb491-1"><a href="Descriptiva.html#cb491-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb491-2"><a href="Descriptiva.html#cb491-2" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span>norm(loc<span class="op">=</span>mu,scale<span class="op">=</span>sd)</span></code></pre></div>
+<p>a continuación generamos los valores de <code>x</code> donde se evaluará la densidad y se hace la evaluación, obteniendo <code>y</code></p>
+<div class="sourceCode" id="cb492"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb492-1"><a href="Descriptiva.html#cb492-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span>np.linspace(<span class="dv">65</span>,<span class="dv">255</span>,<span class="dv">500</span>)</span>
+<span id="cb492-2"><a href="Descriptiva.html#cb492-2" aria-hidden="true" tabindex="-1"></a>y<span class="op">=</span>X.pdf(x)</span></code></pre></div>
+<p>por último hacemos el gráfico, del histograma, le adicionamos la curva de densidad normal y el kernel density</p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb493-1"><a href="Descriptiva.html#cb493-1" aria-hidden="true" tabindex="-1"></a>t11.hist(bins<span class="op">=</span>np.arange(<span class="dv">70</span>,<span class="dv">260</span>,<span class="dv">20</span>),density<span class="op">=</span><span class="va">True</span>,grid<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb493-2"><a href="Descriptiva.html#cb493-2" aria-hidden="true" tabindex="-1"></a>t11.plot.density(xlim<span class="op">=</span>[<span class="dv">60</span>,<span class="dv">260</span>],label<span class="op">=</span><span class="st">&quot;KDE&quot;</span>)</span>
+<span id="cb493-3"><a href="Descriptiva.html#cb493-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">&quot;r&quot;</span>,label<span class="op">=</span><span class="st">&quot;Densidad normal&quot;</span>)</span>
+<span id="cb493-4"><a href="Descriptiva.html#cb493-4" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb493-5"><a href="Descriptiva.html#cb493-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-228-5.png" width="720" /></p>
+</div>
+</div>
+</div>
+<div id="ejercicios-4" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Ejercicios</h2>
+<ol style="list-style-type: decimal">
+<li>Una nueva aleación de aluminio litio está siendo evaluada como posible material para la fabricación de elementos estructurales de aeronaves. Los datos de resistencia a la tensión, en libras por pulgada cuadrada (psi), de 80 muestras
+se transcriben en la tabla <a href="Descriptiva.html#tab:ejercicioresistencia">3.5</a> <span class="citation">(<a href="#ref-mongomery" role="doc-biblioref">Mongomery and Runger 2003</a>)</span>
+<ol style="list-style-type: lower-alpha">
+<li>Usando <code>Pandas</code> calcule: media, mediana, desviación estándar, varianza, primer y tercer cuartil, percentil 80.</li>
+<li>Repita el punto anterior usando <code>NumPy</code>.</li>
+</ol></li>
+<li>Definir una función en lenguaje Python que implemente el siguiente algoritmo para calcular percentiles descrito en <span class="citation">(<a href="#ref-mongomery" role="doc-biblioref">Mongomery and Runger 2003</a>)</span>: para calcular el percentil <span class="math inline">\(100k\%\)</span> <span class="math inline">\((0\leq k \leq 1)\)</span> se procede de la siguiente forma:</li>
+</ol>
+<ul>
+<li><p>Ordene los datos de menor a mayor.</p></li>
+<li><p>Calcule <span class="math inline">\(nk\)</span>, donde <span class="math inline">\(n\)</span> es el número de datos</p>
+<ul>
+<li>Si <span class="math inline">\(nk\)</span> no es entero aproxímelo al entero siguiente y esa es la
+posición del percentil <span class="math inline">\(100k\%\)</span>.</li>
+<li>Si <span class="math inline">\(nk\)</span> es entero, el percentil <span class="math inline">\(100k\%\)</span> se obtiene promediando las
+observaciones que ocupan los lugares <span class="math inline">\(nk\)</span> y <span class="math inline">\(nk+1\)</span>.</li>
+</ul></li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Definir una función en lenguaje Python que implemente el siguiente algoritmo para calcular percentiles descrito en <span class="citation">(<a href="#ref-webster" role="doc-biblioref">Webster 2000</a>)</span>: para calcular el percentil <span class="math inline">\(p\%\)</span> <span class="math inline">\((0\leq p \leq 100)\)</span> se procede de la siguiente forma:</li>
+</ol>
+<ul>
+<li><p>Calcular posición mediante <span class="math display">\[L_p=(n+1)\frac {p}{100}\]</span> y luego</p>
+<ul>
+<li>Si <span class="math inline">\(L_p\)</span> es entero, el percentil buscado es el dato <span class="math inline">\(X_{(L_p)}\)</span> (el dato en la posición <span class="math inline">\(L_p\)</span> después de ordenar)</li>
+<li>Si no es entero entonces el percentil es <span class="math display">\[X_{([L_p])}+D(L_p)(X_{([L_p]+1)}-X_{([L_p])})\]</span> donde <span class="math inline">\([L_p]\)</span> es la parte entera de <span class="math inline">\(L_p\)</span> y <span class="math inline">\(D(L_p)\)</span> es la parte decimal de <span class="math inline">\(L_p\)</span>.</li>
+</ul></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Lea los datos de la tabla <a href="Descriptiva.html#tab:DatosEjemploRse">3.4</a> usando <code>numpy</code> y elabore los gráficos de barras simples de la figura <a href="Descriptiva.html#fig:graficobarrassimples">3.1</a> sin usar <code>Pandas</code>, es decir, solo usando <code>numpy</code> y <code>matplotlib.pyplot</code>.</li>
+</ol>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-HyndmanYanan" class="csl-entry">
+Hyndman, Rob J., and Yanan Fan. 1996. <span>“Sample Quantiles in Statistical Packages.”</span> <em>The American Statistician</em> 50 (4): 361–65. <a href="https://doi.org/10.1038/s41586-020-2649-2">https://doi.org/10.1038/s41586-020-2649-2</a>.
+</div>
+<div id="ref-mongomery" class="csl-entry">
+Mongomery, Douglas, and George Runger. 2003. <em>Probabilidad y Estadística Aplicadas a La Ingeniería</em>. México DF: Limusa.
+</div>
+<div id="ref-webster" class="csl-entry">
+Webster, Allen. 2000. <em>Estadística Aplicada a Los Negocios y La Economía</em>. Tercera edición. Bogotá DC: Irwin McGraw-Hill.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="contenedores-de-datos-en-python.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="parts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-Descriptiva.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
